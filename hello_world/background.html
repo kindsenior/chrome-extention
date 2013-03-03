@@ -1,0 +1,69 @@
+<html>
+
+	<!-- <style> -->
+	<!-- body { -->
+	<!--   min-width:357px; -->
+	<!--   overflow-x:hidden; -->
+	<!-- } -->
+
+	<!-- img { -->
+	<!--   margin:5px; -->
+	<!--   border:2px solid black; -->
+	<!--   vertical-align:middle; -->
+	<!--   width:75px; -->
+	<!--   height:75px; -->
+	<!-- } -->
+	<!-- </style> -->
+
+	<!-- <script> -->
+	<!-- var req = new XMLHttpRequest(); -->
+	<!-- //RSSデータを取得する -->
+	<!-- req.open( -->
+	<!--     "GET", -->
+	<!--     "http://feeds.fc2.com/fc2/xml?host=symfoware.blog68&format=xml", -->
+	<!--     true); -->
+  
+	<!-- //取得できたら、showNewsを呼び出す -->
+	<!-- req.onload = showNews; -->
+	<!-- req.send(null); -->
+
+	<!-- function showNews() { -->
+	<!--   //itemタグに囲まれた部分に、記事へのURLとタイトルが含まれる -->
+	<!--   var elements = req.responseXML.getElementsByTagName("item"); -->
+
+	<!--   //取得したitemタグ分ループ -->
+	<!--   for (var i = 0, element; element = elements[i]; i++) { -->
+	<!--     //記事へのリンクを作成して、ポップアップに表示 -->
+	<!--     var link = document.createElement("a"); -->
+	<!--     link.href = getTagValue(element, "link"); -->
+	<!--     var str = document.createTextNode(getTagValue(element, "title")); -->
+	<!--     link.appendChild(str); -->
+  
+	<!--     //リンクをクリックされた時、新しくタブを作成し表示する -->
+	<!--     link.setAttribute("onclick","createTab('" + link.href + "');"); -->
+	<!--     document.body.appendChild(link); -->
+	<!--     document.body.appendChild(document.createElement("br")); -->
+	<!--   } -->
+
+	<!-- } -->
+
+	<!-- //Nodelistオブジェクトから値を取得する -->
+	<!-- function getTagValue(element, tag) { -->
+	<!--   return element.getElementsByTagName(tag).item(0).childNodes.item(0).nodeValue; -->
+	<!-- } -->
+
+	<!-- //新しくタブを作成し、指定されたURLを表示する -->
+	<!-- function createTab(blog_url) { -->
+	<!--   chrome.tabs.create({url: blog_url}); -->
+	<!-- } -->
+
+	<!-- </script> -->
+
+	<script>
+		chrome.browserAction.onClicked.addListener( function(tab){
+		//chrome.tabs.remove(tab.id, function()}{);
+		chrome.brouserAction.setTitle();
+		});
+
+	</script>
+</html>
