@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+	<head>
+		<title>YouTube動画をHTMLに貼り付ける｜動画コントロール サンプル</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--▼A Use the Google AJAX Libraries API: http://code.google.com/apis/ajaxlibs/ 
+				SWFObject:http://code.google.com/intl/ja/apis/ajaxlibs/documentation/index.html#swfobject -->
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+      google.load("swfobject", "2.1");
+    </script>
+
+		<!--▼B 動画コントロールJavascript-->
+		<script type="text/javascript">
+			//動画特定プレーヤーの準備が整うとこの関数が実行される▼B-1
+			function onYouTubePlayerReady(playerId) {
+			//alert(playerId);
+			if(playerId == "ytplayer1"){
+      ytplayer1 = document.getElementById("myytplayer1");  //サンプル動画
+			}
+			if(playerId == "ytplayer2"){
+      ytplayer2 = document.getElementById("myytplayer2"); //動画２
+			}
+			}
+
+			//動画コントロール▼B-2
+			function play1() {
+			if (ytplayer1) {
+			ytplayer1.playVideo();//再生開始
+			ytplayer1.setVolume(20);//再生音量を20に設定
+			}
+			}
+		</script>
+
+	</head>
+
+	<body onload="setTimeout('play1()',3000)"><!--▼E 動画の起動（コントロール）-->
+		<!--▼C 動画埋め込み場所-->
+    <div id="ytapiplayer1">
+      You need Flash player 8+ and JavaScript enabled to view this video.
+    </div>
+		<!--▼D 動画埋め込み SWFObject-->
+		<script type="text/javascript">
+			var params = { allowScriptAccess: "always" };
+			var atts = { id: "myytplayer1" };
+			swfobject.embedSWF("http://www.youtube.com/v/Fb4jRjSGvw0&enablejsapi=1&playerapiid=ytplayer1&rel=0&color2=0xcd311b",
+			"ytapiplayer1", "480", "295", "8", null, null, params, atts);
+		</script>
+
+	</body>
+</html>
