@@ -13,61 +13,12 @@
 
 		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="ylistrandom.js"></script>
-		<!-- <script type="text/javascript"
-				 src="http://gdata.youtube.com/feeds/api/playlists/A43739755D0CD2E2?max-results=50&alt=json-in-script&callback=ylistrandom"></script> -->
-		<!-- <script type="text/javascript"
-				 src="http://gdata.youtube.com/feeds/api/playlists/PLRBIThknUR5llT1e6bfmf5trUu9a2Q_4L?alt=json-in-script&callback=ylistrandom"></script> -->
-		<script type="text/javascript"
-						src="http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=ylistrandom"></script>
+		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/A43739755D0CD2E2?max-results=50&alt=json-in-script&callback=ylistrandom"></script> -->
+		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/PLRBIThknUR5llT1e6bfmf5trUu9a2Q_4L?alt=json-in-script&callback=ylistrandom"></script> -->
+		<script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=ylistrandom"></script>
+		<script type="text/javascript" src="player.js"></script>
 
 	</head>
-
-	<script type="text/javascript">
-		//動画特定プレーヤーの準備が整うとこの関数が実行される▼B-1
-		function onYouTubePlayerReady(playerId) {
-		//alert(playerId);
-		console.log("ready");
-		console.log(playerId);
-
-		if(playerId == "ytplayer1"){
-    ytplayer1 = document.getElementById("myytplayer1");
-
-		//「onStateChange」というイベントに、「onytplayerStateChage」という関数を登録
-		//document.getElementById(playerId).addEventListener("onStateChange","onytplayerStateChange");
-		ytplayer1.addEventListener("onStateChange","onytplayerStateChange");
-
-		}
-
-		//if(playerId == "ytplayer2"){
-    //ytplayer2 = document.getElementById("myytplayer2"); //動画２
-		//}
-
-		}
-
-		//動画コントロール▼B-2
-		function play1() {
-		console.log("play");
-		if (ytplayer1) {
-		ytplayer1.playVideo();//再生開始
-		ytplayer1.setVolume(100);//再生音量を20に設定
-		}
-		}
-
-		//再生が終了した時だったら次のビデオを読み込んで再生する
-		function onytplayerStateChange(newState) { 
-		console.log("state");
-    if (newState == 0) {
-		console.log("end");
-		var next_video_idx = Math.floor(Math.random()*video_urls.length);
-		console.log(video_titles[next_video_idx]);
-		console.log(video_urls[next_video_idx]);
-    //document.getElementById("myytplayer1").loadVideoById(video_urls[Math.floor(Math.random()*video_urls.length)]);
-    //document.getElementById("myytplayer1").loadVideoByUrl(video_urls[Math.floor(Math.random()*video_urls.length)]); 
-    document.getElementById("myytplayer1").loadVideoByUrl(video_urls[next_video_idx]); 
-    }
-		}
-
-	</script>
 
 	<body onload="setTimeout('play1()',3000)"><!--▼E 動画の起動（コントロール）-->
 
@@ -76,29 +27,41 @@
       You need Flash player 8+ and JavaScript enabled to view this video.
     </div>
 		
-</br>
-<form name="chbox">
+	</br>
+	
+	<!-- チェック確認ボタン -->
+	<input type="button" value="チェックされているか調べる" onClick="checkCB()">
+		
+	<!-- チェックリスト作成 -->
+	<form name="chbox">
 		<script type="text/javascript">
-			for(var list_idx = 0; list_idx < list_titles.length; ++list_idx){
-			document.write('<input type="checkbox" name="名前" value="値1" checked="checked"/>');
-			document.write(list_titles[list_idx]+"</br>");
+			for(var list_idx = 0; list_idx < playlist_titles.length; ++list_idx){
+			document.write('<input type="checkbox" value="値1" checked="checked"/>');
+			document.write(playlist_titles[list_idx]+"</br>");
       }
 		</script>
-</form>
+  </form>
 
-		<!--▼D 動画埋め込み SWFObject-->
-		<script type="text/javascript">
-			var params = { allowScriptAccess: "always" };
-			var atts = { id: "myytplayer1" };
+	<script Language="JavaScript">
+		function checkCB(){
+		flag = document.chbox.elements[1].checked;
+		if (flag) alert("チェックされています"); else alert("チェックされていません");
+		}
+	</script>
 
-			<!-- document.write(video_url); -->
+	<!--▼D 動画埋め込み SWFObject-->
+	<script type="text/javascript">
+		var params = { allowScriptAccess: "always" };
+		var atts = { id: "myytplayer1" };
 
-			video_url = video_urls[Math.floor(Math.random()*video_urls.length)];
-			video_title = video_titles[Math.floor(Math.random()*video_titles.length)];
-			swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts);
+		<!-- document.write(video_url); -->
+		var video_urls = getCheckedListVideos();
+		video_url = video_urls[Math.floor(Math.random()*video_urls.length)];
+		<!-- video_title = video_titles[Math.floor(Math.random()*video_titles.length)]; -->
+		swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts);
 
-		</script>
-	</body>
+	</script>
+</body>
 
 </html>
 	

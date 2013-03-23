@@ -1,8 +1,22 @@
+// チェックが入っているリストのビデオを抽出
+function getCheckedListVideos(){
+		var checked_list_videos = [];
+		for(var list_idx = 0; list_idx < playlist_titles.length; ++list_idx){
+		flag = document.chbox.elements[list_idx].checked;
+				if (flag){
+						Array.prototype.push.apply(checked_list_videos,video_url_lists[list_idx]);
+				}
+		}
+		return checked_list_videos;
+}
+
 function ylistrandom(youtube) {
 		var entries = youtube.feed.entry;
-		list_titles = [];
-		video_titles = [];
-		video_urls = [];
+		playlist_titles = [];
+		var video_titles = [];
+		video_title_lists = [];
+		var video_urls = [];
+		video_url_lists = [];
 		var max_results = 50;
 		var turn_num;
 		// for (var i = 0; i < entries.length; ++i) {
@@ -13,14 +27,13 @@ function ylistrandom(youtube) {
 				// var list_url = entries[i].content.src + '&alt=json-in-script&callback=?';
 				// var list_url = entries[i].content.src + '&alt=json&callback=?';
 				var list_url = entries[i].content.src + '&alt=json';
-				list_titles.push(entries[i].title.$t);
+				playlist_titles.push(entries[i].title.$t);
 
 				// document.write(list_url);
 				// document.write("</br>");
 
-				// video_titles = [];
-				// video_urls = [];
 
+				// ターン数計算
 				// 50個ずつしか動画情報を取得できないので先に再生リスト内の全動画数からターン数を計算
 				$.ajax({
 						type: "GET",
@@ -33,7 +46,9 @@ function ylistrandom(youtube) {
 				});
 				// document.write(String(turn_num)); document.write("</br>");
 
-				// 全動画情報取得
+				// リスト内全動画情報取得
+				video_titles = [];
+				video_urls = [];
 				for( var turn = 0; turn < turn_num; ++turn ){
 						list_url = entries[i].content.src + '&alt=json' + '&max-results=' + String(max_results)
 								+ '&start-index=' + String(max_results*turn+1);
@@ -63,6 +78,8 @@ function ylistrandom(youtube) {
 										document.write(textStatus);
 								}
 						});
+						video_title_lists.push(video_titles);
+						video_url_lists.push(video_urls);
 				}
 
 				// document.write("</br>");
