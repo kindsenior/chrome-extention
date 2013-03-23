@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 	<head>
-		<title>YouTube動画をHTMLに貼り付ける｜動画コントロール サンプル</title>
+		<title>YouTubeリスト マージ再生</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!--▼A Use the Google AJAX Libraries API: http://code.google.com/apis/ajaxlibs/ 
 				SWFObject:http://code.google.com/intl/ja/apis/ajaxlibs/documentation/index.html#swfobject -->
@@ -29,8 +29,11 @@
 		
 	</br>
 	
+	<!-- 次の曲 -->
+	<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
+
 	<!-- チェック確認ボタン -->
-	<input type="button" value="チェックされているか調べる" onClick="checkCB()">
+	<!-- <input type="button" value="チェックされているか調べる" onClick="checkCB()"/> -->
 		
 	<!-- チェックリスト作成 -->
 	<form name="chbox">
@@ -42,12 +45,12 @@
 		</script>
   </form>
 
-	<script Language="JavaScript">
-		function checkCB(){
-		flag = document.chbox.elements[1].checked;
-		if (flag) alert("チェックされています"); else alert("チェックされていません");
-		}
-	</script>
+	<!-- <script Language="JavaScript"> -->
+	<!-- 	function checkCB(){ -->
+	<!-- 	flag = document.chbox.elements[1].checked; -->
+	<!-- 	if (flag) alert("チェックされています"); else alert("チェックされていません"); -->
+	<!-- 	} -->
+	<!-- </script> -->
 
 	<!--▼D 動画埋め込み SWFObject-->
 	<script type="text/javascript">
@@ -58,7 +61,8 @@
 		var video_urls = getCheckedListVideos();
 		video_url = video_urls[Math.floor(Math.random()*video_urls.length)];
 		<!-- video_title = video_titles[Math.floor(Math.random()*video_titles.length)]; -->
-		swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts);
+		<!-- swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts); -->
+		swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "600", "400", "8", null, null, params, atts);
 
 	</script>
 </body>

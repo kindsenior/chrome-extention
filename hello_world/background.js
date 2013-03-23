@@ -4,6 +4,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 		// chrome.browserAction.setTitle( {title:"aaa", tabId: tab.id} );
 		// chrome.tabs.create( {url:"http://www.google.com"} );
+		chrome.tabs.create( {url:"http://kindsenior.6.ql.bz/hello_world/playlist.html"} );
 		// chrome.tabs.update( tab.id, {url:"http://www.google.com"} );
 
 

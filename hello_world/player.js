@@ -32,15 +32,20 @@ function play1() {
 function onytplayerStateChange(newState) { 
 		console.log("state");
     if (newState == 0) {
-				console.log("end");
-				var video_urls = getCheckedListVideos();
-				var next_video_idx = Math.floor(Math.random()*video_urls.length);
-				// console.log(video_titles[next_video_idx]);
-				console.log(video_urls[next_video_idx]);
-				//document.getElementById("myytplayer1").loadVideoById(video_urls[Math.floor(Math.random()*video_urls.length)]);
-				//document.getElementById("myytplayer1").loadVideoByUrl(video_urls[Math.floor(Math.random()*video_urls.length)]); 
-				document.getElementById("myytplayer1").loadVideoByUrl(video_urls[next_video_idx]); 
+				console.log("video ended");
+				skip();
     }
 }
 
+// 次の曲
+function skip(){
+		console.log("next video");
+		var video_urls = getCheckedListVideos();
+		var next_video_idx = Math.floor(Math.random()*video_urls.length);
+		// console.log(video_titles[next_video_idx]);
+		console.log(video_urls[next_video_idx]);
+		//document.getElementById("myytplayer1").loadVideoById(video_urls[Math.floor(Math.random()*video_urls.length)]);
+		document.getElementById("myytplayer1").loadVideoByUrl(video_urls[next_video_idx]); 
+
+}
 

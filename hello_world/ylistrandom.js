@@ -2,7 +2,7 @@
 function getCheckedListVideos(){
 		var checked_list_videos = [];
 		for(var list_idx = 0; list_idx < playlist_titles.length; ++list_idx){
-		flag = document.chbox.elements[list_idx].checked;
+				var flag = document.chbox.elements[list_idx].checked;
 				if (flag){
 						Array.prototype.push.apply(checked_list_videos,video_url_lists[list_idx]);
 				}
@@ -19,8 +19,8 @@ function ylistrandom(youtube) {
 		video_url_lists = [];
 		var max_results = 50;
 		var turn_num;
-		// for (var i = 0; i < entries.length; ++i) {
-		for (var i = 0; i < 3; ++i) {
+		for (var i = 0; i < entries.length; ++i) {
+		// for (var i = 0; i < 3; ++i) {
 				// document.write(entries[i].title.$t);
 				// document.write("</br>");
 
