@@ -13,10 +13,20 @@
 
 		<script type="text/javascript" src="jquery.js"></script>
 		<script type="text/javascript" src="ylistrandom.js"></script>
-		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/A43739755D0CD2E2?max-results=50&alt=json-in-script&callback=ylistrandom"></script> -->
-		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/PLRBIThknUR5llT1e6bfmf5trUu9a2Q_4L?alt=json-in-script&callback=ylistrandom"></script> -->
-		<script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=ylistrandom"></script>
+		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/A43739755D0CD2E2?max-results=50&alt=json-in-script&callback=getYoutubePlaylist"></script> -->
+		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/PLRBIThknUR5llT1e6bfmf5trUu9a2Q_4L?alt=json-in-script&callback=getYoutubePlaylist"></script> -->
+		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist"></script> -->
 		<script type="text/javascript" src="player.js"></script>
+
+		<script type="text/javascript">
+			$.ajax({
+			type: "GET",
+			url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist",
+			async: false,
+			error: function(XMLHttpRequest,textStatus,errorThrown){
+			document.write(textStatus); console.log("GET error"); }
+			});
+		</script>
 
 	</head>
 
@@ -27,40 +37,56 @@
       You need Flash player 8+ and JavaScript enabled to view this video.
     </div>
 		
-	</br>
+	<br/>
 	
 	<!-- 次の曲 -->
 	<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
 
-	<!-- チェック確認ボタン -->
-	<!-- <input type="button" value="チェックされているか調べる" onClick="checkCB()"/> -->
+	<!-- PlaylistSet追加ボタン -->
+	<input type="button" name="add_playlistset" value="Add PlaylistSet"
+				 onClick="window.open('input_window.html','input form','width=400, height=300, left=0, top=100 ');"/>
+
 		
-	<!-- チェックリスト作成 -->
-	<form name="chbox">
+
+	<form name="playlist_set_selection">
+
+		<input type="radio" name="playlist_set" value="not_saved" checked="checked"/>Playlist Set Not Saved<br/>
+		<!-- チェックリスト作成 -->
 		<script type="text/javascript">
-			for(var list_idx = 0; list_idx < playlist_titles.length; ++list_idx){
-			document.write('<input type="checkbox" value="値1" checked="checked"/>');
-			document.write(playlist_titles[list_idx]+"</br>");
+			var playlists = JSON.parse(localStorage['playlists']);
+			for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			  document.write('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="値1" checked="checked"/>');
+			  document.write(playlists[list_idx].title + " " + playlists[list_idx].url + "<br/>");
+      }
+		</script>
+
+		<!-- ラジオボタン作成 -->
+		<script type="text/javascript">
+			var playlist_sets = [];
+			try{
+			playlist_sets = JSON.parse(localStorage['playlist_sets']);
+			}catch(e){
+			}
+
+			for(var list_idx = 0; list_idx < playlist_sets.length; ++list_idx){
+			  document.write('<input type="radio" name="playlist_set" value="saved"/>');
+			  document.write(playlist_sets[list_idx].title + "<br/>");
       }
 		</script>
   </form>
 
-	<!-- <script Language="JavaScript"> -->
-	<!-- 	function checkCB(){ -->
-	<!-- 	flag = document.chbox.elements[1].checked; -->
-	<!-- 	if (flag) alert("チェックされています"); else alert("チェックされていません"); -->
-	<!-- 	} -->
-	<!-- </script> -->
+  <!-- テスト -->
+	<input type="button" name="test" value="console playlist sets" onClick="test()"/>
+
 
 	<!--▼D 動画埋め込み SWFObject-->
 	<script type="text/javascript">
 		var params = { allowScriptAccess: "always" };
 		var atts = { id: "myytplayer1" };
 
-		<!-- document.write(video_url); -->
-		var video_urls = getCheckedListVideos();
-		video_url = video_urls[Math.floor(Math.random()*video_urls.length)];
-		<!-- video_title = video_titles[Math.floor(Math.random()*video_titles.length)]; -->
+		var videos = getCheckedPlaylistSetVideos();
+		video_url = videos[Math.floor(Math.random()*videos.length)].url;
+		video_title = videos[Math.floor(Math.random()*videos.length)].title;
 		<!-- swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts); -->
 		swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "600", "400", "8", null, null, params, atts);
 
@@ -69,4 +95,3 @@
 
 </html>
 	
-<!-- if( document.chbox.elements[i].checked ) -->

@@ -1,5 +1,5 @@
 //動画特定プレーヤーの準備が整うとこの関数が実行される▼B-1
-function onYouTubePlayerReady(playerId) {
+function onYouTubePlayerReady(playerId){
 		//alert(playerId);
 		console.log("ready");
 		console.log(playerId);
@@ -20,7 +20,7 @@ function onYouTubePlayerReady(playerId) {
 }
 
 //動画コントロール▼B-2
-function play1() {
+function play1(){
 		console.log("play");
 		if (ytplayer1) {
 				ytplayer1.playVideo();//再生開始
@@ -29,7 +29,7 @@ function play1() {
 }
 
 //再生が終了した時だったら次のビデオを読み込んで再生する
-function onytplayerStateChange(newState) { 
+function onytplayerStateChange(newState){ 
 		console.log("state");
     if (newState == 0) {
 				console.log("video ended");
@@ -40,12 +40,12 @@ function onytplayerStateChange(newState) {
 // 次の曲
 function skip(){
 		console.log("next video");
-		var video_urls = getCheckedListVideos();
-		var next_video_idx = Math.floor(Math.random()*video_urls.length);
-		// console.log(video_titles[next_video_idx]);
-		console.log(video_urls[next_video_idx]);
+		var videos = getCheckedPlaylistSetVideos();
+		var next_video_idx = Math.floor(Math.random()*videos.length);
+		console.log(videos[next_video_idx].title);
+		console.log(videos[next_video_idx].url);
 		//document.getElementById("myytplayer1").loadVideoById(video_urls[Math.floor(Math.random()*video_urls.length)]);
-		document.getElementById("myytplayer1").loadVideoByUrl(video_urls[next_video_idx]); 
+		document.getElementById("myytplayer1").loadVideoByUrl(videos[next_video_idx].url); 
 
 }
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+	<head>
+		<title>YouTubeリスト マージ再生</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+      google.load("swfobject", "2.1");
+    </script>
+
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="ylistrandom.js"></script>
+		<!-- <script type="text/javascript" src="player.js"></script> -->
+
+	</head>
+
+	<body>
+
+		<!-- タイトル入力 -->
+		<form name="textinput">
+			Title of Playlist Set : <input type="text" name="title" value="Playlist Set"/>
+		</form>
+
+		<!-- チェックリスト作成 -->
+		<form name="chbox">
+			<script type="text/javascript">
+				var playlists = JSON.parse(localStorage['playlists']);
+				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			  document.write('<input type="checkbox" value="値1"/>');
+			  document.write(playlists[list_idx].title + "<br/>");
+      }
+		  </script>
+		</form>
+
+		<!-- 追加ボタン -->
+		<input type="button" value="Add" onClick="addPlaylistSet()"/>
+		
+	</body>
+
+</html>
+	
+

@@ -1,37 +1,84 @@
-// チェックが入っているリストのビデオを抽出
-function getCheckedListVideos(){
-		var checked_list_videos = [];
-		for(var list_idx = 0; list_idx < playlist_titles.length; ++list_idx){
-				var flag = document.chbox.elements[list_idx].checked;
-				if (flag){
-						Array.prototype.push.apply(checked_list_videos,video_url_lists[list_idx]);
-				}
+function test(){
+		var playlist_sets = JSON.parse(localStorage['playlist_sets']);
+		console.log(playlist_sets.length);
+		for(var list_idx = 0; list_idx < playlist_sets.length; ++list_idx){
+				console.log(playlist_sets[list_idx].title);
 		}
-		return checked_list_videos;
 }
 
-function ylistrandom(youtube) {
+
+// チェックのついているプレイリストのセットを追加
+function addPlaylistSet(){
+		var checked_playlists = [];
+		var playlists = JSON.parse(localStorage['playlists']);
+		console.log("add to PlaylistSet");
+		for(var list_idx = 0; list_idx < document.chbox.elements.length; ++list_idx){
+				var flag = document.chbox.elements[list_idx].checked;
+				if (flag){
+						checked_playlists.push(playlists[list_idx]);
+						console.log(playlists[list_idx].title);
+				}
+		}
+
+		// 登録済みのプレイリストセットを取得
+		var playlist_sets = [];
+		try{
+				playlist_sets = JSON.parse(localStorage['playlist_sets']);
+		}catch(e){
+				console.log("playlistsSets not exists");
+		}
+		console.log(document.textinput.title.value);
+		// 追加 & 保存
+		playlist_sets.push({
+				title: document.textinput.title.value,
+				playlists: checked_playlists
+		});
+
+		localStorage['playlist_sets'] = JSON.stringify(playlist_sets);
+
+		// window.close();
+}
+
+
+// チェックが入っているリスト内のビデオを抽出
+function getCheckedPlaylistSetVideos(){
+		var checked_playlist_set_videos = [];
+		var selections = document.playlist_set_selection.playlist_set;
+		for(var i = 0; i < selections.length; ++i){
+				if( selections[i].checked ){
+						
+						if ( selections[i].value == "not_saved" ){// 非保存のリストセット選択時
+								var playlists = JSON.parse(localStorage['playlists']);
+								for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+										var flag = document.playlist_set_selection.elements[list_idx+1].checked;// 1足すのを忘れない
+										if (flag)	Array.prototype.push.apply(checked_playlist_set_videos,playlists[list_idx].videos);
+								}
+								return checked_playlist_set_videos;// チェックされたリスト内のvideoのシーケンス
+						}else{// 保存されたリストセット選択時
+								var playlist_sets = JSON.parse(localStorage['playlist_sets']);
+								var selected_playlist_set = playlist_sets[i-1];// 1引くのを忘れない
+								for(var list_idx = 0; list_idx < selected_playlist_set.playlists.length; ++list_idx){
+										Array.prototype.push.apply(checked_playlist_set_videos, selected_playlist_set.playlists[list_idx].videos);
+								}
+								return checked_playlist_set_videos;
+						}
+				}
+		}
+
+}
+
+// 特定ユーザのプレイリスト内のビデオを取得
+function getYoutubePlaylist(youtube){
 		var entries = youtube.feed.entry;
-		playlist_titles = [];
-		var video_titles = [];
-		video_title_lists = [];
-		var video_urls = [];
-		video_url_lists = [];
+		var videos = [];// video_lists = [];
 		var max_results = 50;
 		var turn_num;
-		for (var i = 0; i < entries.length; ++i) {
-		// for (var i = 0; i < 3; ++i) {
-				// document.write(entries[i].title.$t);
-				// document.write("</br>");
+		var playlists = [];
 
-				// var list_url = entries[i].content.src + '&alt=json-in-script&callback=?';
-				// var list_url = entries[i].content.src + '&alt=json&callback=?';
+		for (var i = 0; i < entries.length; ++i){
+		// for(var i = 0; i < 3; ++i){
+
 				var list_url = entries[i].content.src + '&alt=json';
-				playlist_titles.push(entries[i].title.$t);
-
-				// document.write(list_url);
-				// document.write("</br>");
-
 
 				// ターン数計算
 				// 50個ずつしか動画情報を取得できないので先に再生リスト内の全動画数からターン数を計算
@@ -44,11 +91,9 @@ function ylistrandom(youtube) {
 						},
 						error: function(XMLHttpRequest,textStatus,errorThrown){ document.write(textStatus); }
 				});
-				// document.write(String(turn_num)); document.write("</br>");
 
 				// リスト内全動画情報取得
-				video_titles = [];
-				video_urls = [];
+				videos = [];
 				for( var turn = 0; turn < turn_num; ++turn ){
 						list_url = entries[i].content.src + '&alt=json' + '&max-results=' + String(max_results)
 								+ '&start-index=' + String(max_results*turn+1);
@@ -58,19 +103,12 @@ function ylistrandom(youtube) {
 								async: false,
 								success: function(data) {
 										var video_entries = data.feed.entry;
-										// document.write(data.feed.openSearch$totalResults.$t);
-										// document.write("</br>");
 										for ( var j = 0; j < video_entries.length; ++j ){
-												// document.write(video_entries[j].title.$t);
-
 												try{
-														// document.write(video_entries[j].content.src);
-														video_urls.push(video_entries[j].content.src);
-														video_titles.push(video_entries[j].title.$t);
+														videos.push({url:video_entries[j].content.src, title:video_entries[j].title.$t});
 												}catch(e){
 														// document.write("hoge");// 要素がなかった場合の例外処理
 												}
-												// document.write("</br>");
 
 										}
 								},
@@ -78,21 +116,25 @@ function ylistrandom(youtube) {
 										document.write(textStatus);
 								}
 						});
-						video_title_lists.push(video_titles);
-						video_url_lists.push(video_urls);
 				}
 
-				// document.write("</br>");
+				// プレイリスト情報のシーケンス
+				playlists.push({
+						url: entries[i].content.src+'&alt=json',
+						title: entries[i].title.$t,
+						videos: videos
+				});
+
+
 		}
+		
+		// LocalStorage保存
+		localStorage['playlists'] = JSON.stringify(playlists);		
 
 		// $.each( video_titles, function(i, val){
 		// 		document.write(val);
 		// 		document.write("</br>");
 		// });
-
-		// video_url = video_urls[Math.floor(Math.random()*video_urls.length)];
-		// video_title = video_titles[Math.floor(Math.random()*video_titles.length)];
-
 
 }
 
