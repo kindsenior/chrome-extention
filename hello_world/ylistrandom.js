@@ -130,11 +130,12 @@ function getYoutubePlaylist(youtube){
 		
 		// LocalStorage保存
 		localStorage['playlists'] = JSON.stringify(playlists);		
-
-		// $.each( video_titles, function(i, val){
-		// 		document.write(val);
-		// 		document.write("</br>");
-		// });
+		document.write("hoge");
+		$.each( video_titles, function(i, val){
+				document.write(val);
+				document.write("</br>");
+		});
+		document.write("hoge");
 
 }
 
