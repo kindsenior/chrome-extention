@@ -21,10 +21,16 @@
 		<script type="text/javascript">
 			$.ajax({
 			type: "GET",
-			url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist",
+			//url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist",
+			url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json",
 			async: false,
+			success: function(data){
+			getYoutubePlaylist(data);
+			},
 			error: function(XMLHttpRequest,textStatus,errorThrown){
-			document.write(textStatus); console.log("GET error"); }
+			console.log("GET error"); 
+			console.log(textStatus);
+			}
 			});
 		</script>
 
@@ -42,15 +48,16 @@
 	<!-- 次の曲 -->
 	<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
 
-	<!-- PlaylistSet追加ボタン -->
-	<input type="button" name="add_playlistset" value="Add PlaylistSet"
-				 onClick="window.open('input_window.html','input form','width=400, height=300, left=0, top=100 ');"/>
+	<!-- PlayGroup追加ボタン -->
+	<input type="button" name="add_playgroup" value="Add Playgroup"
+				 onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100, top=100 ');"/>
 
-		
+	<!-- <input type="button" name="remove_playlistset" value="Add PlaylistSet" -->
+	<!-- 			 onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=0, top=100 ');"/> -->
 
-	<form name="playlist_set_selection">
+	<form name="playgroup_selection">
 
-		<input type="radio" name="playlist_set" value="not_saved" checked="checked"/>Playlist Set Not Saved<br/>
+		<input type="radio" name="playgroup" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
 		<!-- チェックリスト作成 -->
 		<script type="text/javascript">
 			var playlists = JSON.parse(localStorage['playlists']);
@@ -62,21 +69,21 @@
 
 		<!-- ラジオボタン作成 -->
 		<script type="text/javascript">
-			var playlist_sets = [];
+			var playgroups = [];
 			try{
-			playlist_sets = JSON.parse(localStorage['playlist_sets']);
+			playgroups = JSON.parse(localStorage['playgroups']);
 			}catch(e){
 			}
 
-			for(var list_idx = 0; list_idx < playlist_sets.length; ++list_idx){
-			  document.write('<input type="radio" name="playlist_set" value="saved"/>');
-			  document.write(playlist_sets[list_idx].title + "<br/>");
+			for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
+			  document.write('<input type="radio" name="playgroup" value="saved"/>');
+			  document.write(playgroups[list_idx].title + "<br/>");
       }
 		</script>
   </form>
 
   <!-- テスト -->
-	<input type="button" name="test" value="console playlist sets" onClick="test()"/>
+	<input type="button" name="test" value="console playgroups" onClick="test()"/>
 
 
 	<!--▼D 動画埋め込み SWFObject-->
@@ -84,7 +91,7 @@
 		var params = { allowScriptAccess: "always" };
 		var atts = { id: "myytplayer1" };
 
-		var videos = getCheckedPlaylistSetVideos();
+		var videos = getCheckedPlaygroupVideos();
 		video_url = videos[Math.floor(Math.random()*videos.length)].url;
 		video_title = videos[Math.floor(Math.random()*videos.length)].title;
 		<!-- swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts); -->

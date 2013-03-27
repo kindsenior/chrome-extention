@@ -1,14 +1,14 @@
 function test(){
-		var playlist_sets = JSON.parse(localStorage['playlist_sets']);
-		console.log(playlist_sets.length);
-		for(var list_idx = 0; list_idx < playlist_sets.length; ++list_idx){
-				console.log(playlist_sets[list_idx].title);
+		var playgroups = JSON.parse(localStorage['playgroups']);
+		console.log(playgroups.length);
+		for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
+				console.log(playgroups[list_idx].title);
 		}
 }
 
 
 // チェックのついているプレイリストのセットを追加
-function addPlaylistSet(){
+function addPlaygroup(){
 		var checked_playlists = [];
 		var playlists = JSON.parse(localStorage['playlists']);
 		console.log("add to PlaylistSet");
@@ -21,46 +21,46 @@ function addPlaylistSet(){
 		}
 
 		// 登録済みのプレイリストセットを取得
-		var playlist_sets = [];
+		var playgroups = [];
 		try{
-				playlist_sets = JSON.parse(localStorage['playlist_sets']);
+				playgroups = JSON.parse(localStorage['playgroups']);
 		}catch(e){
 				console.log("playlistsSets not exists");
 		}
 		console.log(document.textinput.title.value);
 		// 追加 & 保存
-		playlist_sets.push({
+		playgroups.push({
 				title: document.textinput.title.value,
 				playlists: checked_playlists
 		});
 
-		localStorage['playlist_sets'] = JSON.stringify(playlist_sets);
+		localStorage['playgroups'] = JSON.stringify(playgroups);
 
-		// window.close();
+		window.close();
 }
 
 
 // チェックが入っているリスト内のビデオを抽出
-function getCheckedPlaylistSetVideos(){
-		var checked_playlist_set_videos = [];
-		var selections = document.playlist_set_selection.playlist_set;
+function getCheckedPlaygroupVideos(){
+		var checked_playgroup_videos = [];
+		var selections = document.playgroup_selection.playgroup;
 		for(var i = 0; i < selections.length; ++i){
 				if( selections[i].checked ){
 						
 						if ( selections[i].value == "not_saved" ){// 非保存のリストセット選択時
 								var playlists = JSON.parse(localStorage['playlists']);
 								for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
-										var flag = document.playlist_set_selection.elements[list_idx+1].checked;// 1足すのを忘れない
-										if (flag)	Array.prototype.push.apply(checked_playlist_set_videos,playlists[list_idx].videos);
+										var flag = document.playgroup_selection.elements[list_idx+1].checked;// 1足すのを忘れない
+										if (flag)	Array.prototype.push.apply(checked_playgroup_videos,playlists[list_idx].videos);
 								}
-								return checked_playlist_set_videos;// チェックされたリスト内のvideoのシーケンス
+								return checked_playgroup_videos;// チェックされたリスト内のvideoのシーケンス
 						}else{// 保存されたリストセット選択時
-								var playlist_sets = JSON.parse(localStorage['playlist_sets']);
-								var selected_playlist_set = playlist_sets[i-1];// 1引くのを忘れない
-								for(var list_idx = 0; list_idx < selected_playlist_set.playlists.length; ++list_idx){
-										Array.prototype.push.apply(checked_playlist_set_videos, selected_playlist_set.playlists[list_idx].videos);
+								var playgroups = JSON.parse(localStorage['playgroups']);
+								var selected_playgroup = playgroups[i-1];// 1引くのを忘れない
+								for(var list_idx = 0; list_idx < selected_playgroup.playlists.length; ++list_idx){
+										Array.prototype.push.apply(checked_playgroup_videos, selected_playgroup.playlists[list_idx].videos);
 								}
-								return checked_playlist_set_videos;
+								return checked_playgroup_videos;
 						}
 				}
 		}
@@ -75,8 +75,8 @@ function getYoutubePlaylist(youtube){
 		var turn_num;
 		var playlists = [];
 
-		for (var i = 0; i < entries.length; ++i){
-		// for(var i = 0; i < 3; ++i){
+		// for (var i = 0; i < entries.length; ++i){
+		for(var i = 0; i < 5; ++i){
 
 				var list_url = entries[i].content.src + '&alt=json';
 
@@ -125,17 +125,15 @@ function getYoutubePlaylist(youtube){
 						videos: videos
 				});
 
+		// $.each( videos, function(i, val){
+		// 		document.write(val.title);
+		// 		document.write("<br/>");
+		// });
 
 		}
 		
 		// LocalStorage保存
 		localStorage['playlists'] = JSON.stringify(playlists);		
-		document.write("hoge");
-		$.each( video_titles, function(i, val){
-				document.write(val);
-				document.write("</br>");
-		});
-		document.write("hoge");
 
 }
 

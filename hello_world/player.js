@@ -40,7 +40,7 @@ function onytplayerStateChange(newState){
 // 次の曲
 function skip(){
 		console.log("next video");
-		var videos = getCheckedPlaylistSetVideos();
+		var videos = getCheckedPlaygroupVideos();
 		var next_video_idx = Math.floor(Math.random()*videos.length);
 		console.log(videos[next_video_idx].title);
 		console.log(videos[next_video_idx].url);
