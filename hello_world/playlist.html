@@ -34,6 +34,8 @@
 			});
 		</script>
 
+		<link rel="stylesheet" type="text/css" href="pulldown.css">
+
 	</head>
 
 	<body onload="setTimeout('play1()',3000)"><!--▼E 動画の起動（コントロール）-->
@@ -43,62 +45,86 @@
       You need Flash player 8+ and JavaScript enabled to view this video.
     </div>
 		
-	<br/>
-	
-	<!-- 次の曲 -->
-	<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
+		<br/>
+		
+		<!-- 次の曲 -->
+		<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
 
-	<!-- PlayGroup追加ボタン -->
-	<input type="button" name="add_playgroup" value="Add Playgroup"
-				 onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100, top=100 ');"/>
+		<!-- PlayGroup追加ボタン -->
+		<!-- <input type="button" name="add_playgroup" value="Add Playgroup" -->
+		<!-- 			 onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100, top=100 ');"/> -->
 
-	<!-- <input type="button" name="remove_playlistset" value="Add PlaylistSet" -->
-	<!-- 			 onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=0, top=100 ');"/> -->
+		<!-- 設定プルダウン -->
+		<div id="items">
+			<h3>setting</h3>
+			<ul id="foo">
+				<li class="bar">about&nbsp;playlist
+					<ul>
+						<li class="bar">add&nbsp;playlist
+							<ul>
+								<li>from&nbsp;user</li>
+								<li>from&nbsp;playlist&nbsp;ID</li>
+							</ul>
+						</li>
+						<li>remove&nbsp;playlist</li>
+					</ul>
+				</li>
+				<li class="bar">about&nbsp;playgroup
+					<ul>
+						<li onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100 top=100 ');">
+							add&nbsp;playgroup
+						</li>
+						<li>edit&nbsp;playgroup</li>
+						<li>remove&nbsp;playgroup</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 
-	<form name="playgroup_selection">
+		<form name="playgroup_selection">
 
-		<input type="radio" name="playgroup" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
-		<!-- チェックリスト作成 -->
+			<input type="radio" name="playgroup" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
+			<!-- チェックリスト作成 -->
+			<script type="text/javascript">
+				var playlists = JSON.parse(localStorage['playlists']);
+				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+																				 document.write('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="値1" checked="checked"/>');
+																				 document.write(playlists[list_idx].title + " " + playlists[list_idx].url + "<br/>");
+																				 }
+																				 </script>
+
+			<!-- ラジオボタン作成 -->
+			<script type="text/javascript">
+				var playgroups = [];
+				try{
+				playgroups = JSON.parse(localStorage['playgroups']);
+				}catch(e){
+				}
+
+				for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
+																				 document.write('<input type="radio" name="playgroup" value="saved"/>');
+																				 document.write(playgroups[list_idx].title + "<br/>");
+																				 }
+																				 </script>
+		</form>
+
+		<!-- テスト -->
+		<input type="button" name="test" value="console playgroups" onClick="test()"/>
+
+
+		<!--▼D 動画埋め込み SWFObject-->
 		<script type="text/javascript">
-			var playlists = JSON.parse(localStorage['playlists']);
-			for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
-			  document.write('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="値1" checked="checked"/>');
-			  document.write(playlists[list_idx].title + " " + playlists[list_idx].url + "<br/>");
-      }
+			var params = { allowScriptAccess: "always" };
+			var atts = { id: "myytplayer1" };
+
+			var videos = getCheckedPlaygroupVideos();
+			video_url = videos[Math.floor(Math.random()*videos.length)].url;
+			video_title = videos[Math.floor(Math.random()*videos.length)].title;
+			<!-- swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts); -->
+			swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "600", "400", "8", null, null, params, atts);
+
 		</script>
-
-		<!-- ラジオボタン作成 -->
-		<script type="text/javascript">
-			var playgroups = [];
-			try{
-			playgroups = JSON.parse(localStorage['playgroups']);
-			}catch(e){
-			}
-
-			for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
-			  document.write('<input type="radio" name="playgroup" value="saved"/>');
-			  document.write(playgroups[list_idx].title + "<br/>");
-      }
-		</script>
-  </form>
-
-  <!-- テスト -->
-	<input type="button" name="test" value="console playgroups" onClick="test()"/>
-
-
-	<!--▼D 動画埋め込み SWFObject-->
-	<script type="text/javascript">
-		var params = { allowScriptAccess: "always" };
-		var atts = { id: "myytplayer1" };
-
-		var videos = getCheckedPlaygroupVideos();
-		video_url = videos[Math.floor(Math.random()*videos.length)].url;
-		video_title = videos[Math.floor(Math.random()*videos.length)].title;
-		<!-- swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts); -->
-		swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "600", "400", "8", null, null, params, atts);
-
-	</script>
-</body>
+	</body>
 
 </html>
-	
+

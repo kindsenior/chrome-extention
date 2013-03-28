@@ -1,0 +1,50 @@
+#items
+	{
+	width: 80px;
+	}
+h3
+	{
+	margin: 0;
+	padding: 0;
+	}
+h3:hover
+	{
+	background: #ccc;
+	}
+ul
+	{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+	border: 1px solid #000;
+	}
+li
+	{
+	list-style: none;
+	margin: 0;
+	padding: 0px 0px;
+	}
+li:hover
+	{
+	background: #ccc;
+	}
+#foo
+	{
+	display: none;
+	width: 130px;
+	position: absolute;
+	margin: 0;
+	}
+#items:hover #foo
+	{
+	display: block;
+	}
+.bar ul{
+	display: none;
+	position: absolute;
+	width: 130px;
+	margin: -1em 0 0 130px;
+	}
+.bar:hover > ul{
+	display: block;
+	}
