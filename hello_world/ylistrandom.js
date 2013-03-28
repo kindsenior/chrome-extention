@@ -42,17 +42,20 @@ function addPlaygroup(){
 
 // チェックが入っているリスト内のビデオを抽出
 function getCheckedPlaygroupVideos(){
+		console.log("getCheckedPlaygroupVideos");
 		var checked_playgroup_videos = [];
 		var selections = document.playgroup_selection.playgroup;
-		for(var i = 0; i < selections.length; ++i){
-				if( selections[i].checked ){
-						
-						if ( selections[i].value == "not_saved" ){// 非保存のリストセット選択時
+		num_selections = selections.length	? selections.length : 1;
+		// console.log(num_selections);
+		for(var i = 0; i < num_selections; ++i){
+				if( num_selections == 1 || selections[i].checked ){
+						if ( num_selections == 1 || selections[i].value == "not_saved" ){// 非保存のリストセット選択時
 								var playlists = JSON.parse(localStorage['playlists']);
 								for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
 										var flag = document.playgroup_selection.elements[list_idx+1].checked;// 1足すのを忘れない
 										if (flag)	Array.prototype.push.apply(checked_playgroup_videos,playlists[list_idx].videos);
 								}
+								console.log("not saved group selected");
 								return checked_playgroup_videos;// チェックされたリスト内のvideoのシーケンス
 						}else{// 保存されたリストセット選択時
 								var playgroups = JSON.parse(localStorage['playgroups']);
@@ -60,6 +63,7 @@ function getCheckedPlaygroupVideos(){
 								for(var list_idx = 0; list_idx < selected_playgroup.playlists.length; ++list_idx){
 										Array.prototype.push.apply(checked_playgroup_videos, selected_playgroup.playlists[list_idx].videos);
 								}
+								console.log("saved group selected");
 								return checked_playgroup_videos;
 						}
 				}
@@ -125,16 +129,18 @@ function getYoutubePlaylist(youtube){
 						videos: videos
 				});
 
-		// $.each( videos, function(i, val){
-		// 		document.write(val.title);
-		// 		document.write("<br/>");
-		// });
+				// console.log(entries[i].title.$t);
+				// $.each( videos, function(i, val){
+				// 		console.log(val.title);
+				// 		document.write(val.title);
+				// 		document.write("<br/>");
+				// });
 
 		}
 		
 		// LocalStorage保存
 		localStorage['playlists'] = JSON.stringify(playlists);		
-
+		
 }
 
 // $(document).ready(function() {
