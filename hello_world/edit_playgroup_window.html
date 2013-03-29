@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+	<head>
+		<title>YouTubeリスト マージ再生</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+      google.load("swfobject", "2.1");
+    </script>
+
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="playgroup.js"></script>
+		<!-- <script type="text/javascript" src="player.js"></script> -->
+
+	</head>
+
+	<body>
+
+
+		<!-- タイトル選択 -->
+		<form method="post" name="selection">
+			Title of Playgroup to Edit:
+			<select name="playgroup_to_edit" onchange="changeChbox();">
+			<option selected value=""/>Select Playgroup to Edit
+			<script type="text/javascript">
+				var playgroups = JSON.parse(localStorage['playgroups']);
+				if( playgroups.length ){
+				for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
+			  document.write('<option value=""/>');
+			  document.write(playgroups[list_idx].title);
+				<!-- console.log(playgroups[list_idx].title); -->
+				}
+				}else{
+			  document.write('<option value=""/>');
+			  document.write(playgroups.title);
+				}
+        </script>
+			</select>
+		</form>
+
+
+		<!-- タイトル入力 -->
+		<form name="textinput">
+			New Title: <input type="text" name="title" value="Playgroup"/>
+		</form>
+
+
+		<!-- playlist追加 -->
+		<form name="add">
+			Title of Playlist to Add:
+			<select name="playgroup_to_add" onchange=";">
+			<option selected value=""/>Select Playgroup to Add
+			<script type="text/javascript">
+				var playgroups = JSON.parse(localStorage['playgroups']);
+				var playlists = playgroups[0].playlists;
+				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			  document.write('<option value=""/>');
+			  document.write(playlists[list_idx].title);
+				<!-- console.log(playgroups[list_idx].title); -->
+				}
+      </script>
+			</select>
+			<input type="button" value="Add" onClick="addPlaylistToPlaygroup();"/>
+		</form>
+
+
+		<!-- playlist削除 -->
+		<form name="remove">
+			Title of Playlist to Remove:
+			<select name="playgroup_to_remove" onchange=";">
+			<option selected value=""/>Select Playgroup to Remove
+			<script type="text/javascript">
+				var playgroups = JSON.parse(localStorage['playgroups']);
+				var playlists = playgroups[0].playlists;
+				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			  document.write('<option value=""/>');
+			  document.write(playlists[list_idx].title);
+				<!-- console.log(playgroups[list_idx].title); -->
+				}
+      </script>
+			</select>
+			<input type="button" value="Remove" onClick="removePlaylistFromPlaygroup();"/>
+		</form>
+
+
+		<!-- チェックリスト -->
+		<div id="current_contents_of_playgroup">
+			<form name="chbox">
+				<script type="text/javascript">
+					var playgroups = JSON.parse(localStorage['playgroups']);
+					var playlists = playgroups[0].playlists;
+					for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			    document.write('<input type="checkbox" value=""/>');
+			    document.write(playlists[list_idx].title + "<br/>");
+          }
+				</script>
+			</form>
+		</div>
+
+
+		<!-- 終了ボタン -->
+		<input type="button" value="Exit" onClick="exitPlaygroupEdit()"/>
+		
+	</body>
+
+</html>
+	
+

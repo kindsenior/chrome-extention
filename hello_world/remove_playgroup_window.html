@@ -17,40 +17,25 @@
 
 	<body>
 
-		<!-- タイトル入力 -->
-		<form method="post" name="selection" >
-			Title of Playgroup to Remove:
-			<select name="playgroup_to_remove" onchange="changeChbox();">
-				<option selected value=""/>Select Playgroup to Remove
-				<!-- <script type="text/javascript"> -->
-				<!-- 	var playgroups = JSON.parse(localStorage['playgroups']); -->
-				<!-- 	if( playgroups.length ){ -->
-				<!-- 	for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){ -->
-				<!-- 	document.write('<option value=""/>'); -->
-				<!-- 	document.write(playgroups[list_idx].title); -->
-				<!-- 	<\!-- console.log(playgroups[list_idx].title); -\-> -->
-				<!-- 	} -->
-				<!-- 	}else{ -->
-				<!-- 	document.write('<option value=""/>'); -->
-				<!-- 	document.write(playgroups.title); -->
-				<!-- 	} -->
-        <!-- </script> -->
-				<option value="bbb"/>bbb
-			</select>
-		</form>
-
-		<!-- チェックリスト作成 -->
-		<form name="chbox">
+		<!-- タイトル選択 -->
+		<form name="chbox" >
+			Title of Playgroup to Remove:<br/>
 			<script type="text/javascript">
-				var playlists = JSON.parse(localStorage['playlists']);
-				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+				var playgroups = JSON.parse(localStorage['playgroups']);
+				if( playgroups.length ){
+				for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
 			  document.write('<input type="checkbox" value=""/>');
-			  document.write(playlists[list_idx].title + "<br/>");
-      }
-		  </script>
+			  document.write(playgroups[list_idx].title + "<br/>");
+				<!-- console.log(playgroups[list_idx].title); -->
+				}
+				}else{
+			  document.write('<input type="checkbox" value=""/>');
+			  document.write(playgroups.title + "<br/>");
+				}
+        </script>
 		</form>
 
-		<!-- 追加ボタン -->
+		<!-- 削除ボタン -->
 		<input type="button" value="Remove" onClick="removePlaygroup()"/>
 		
 	</body>

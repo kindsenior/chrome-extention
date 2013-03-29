@@ -17,6 +17,7 @@
 		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/PLRBIThknUR5llT1e6bfmf5trUu9a2Q_4L?alt=json-in-script&callback=getYoutubePlaylist"></script> -->
 		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist"></script> -->
 		<script type="text/javascript" src="player.js"></script>
+		<script type="text/javascript" src="playgroup.js"></script>
 
 		<script type="text/javascript">
 			$.ajax({
@@ -51,7 +52,7 @@
 		<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
 
 		<!-- 設定プルダウン -->
-		<div id="item">
+		<div id="items">
 			<h3>Setting</h3>
 			<ul id="foo">
 				<li class="bar">about&nbsp;playlist<!-- playlist -->
@@ -67,13 +68,13 @@
 				</li>
 				<li class="bar">about&nbsp;playgroup<!-- playgroup -->
 					<ul>
-						<li onClick="window.open('add_playgroup_window.html','input
-												 form','width=400, height=300, left=100, top=100 ');">
+						<li onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100, top=100 ');">
 							add&nbsp;playgroup
 						</li>
-						<li>edit&nbsp;playgroup</li>
-						<li onClick="window.open('remove_playgroup_window.html','remove
-						 						 form','width=400, height=300, left=100, top=100');">
+						<li onClick="window.open('edit_playgroup_window.html','edit	form', 'width=600, height=300, left=100, top=100')">
+							edit&nbsp;playgroup
+						</li>
+						<li onClick="window.open('remove_playgroup_window.html','remove form','width=400, height=300, left=100, top=100');">
 							remove&nbsp;playgroup
 						</li>
 					</ul>
@@ -81,36 +82,39 @@
 			</ul>
 		</div>
 
-		<form name="playgroup_selection">
+		<div id="current_contents_of_playgroups">
+			<form name="playgroup_selection">
 
-			<input type="radio" name="playgroup" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
-			<!-- チェックリスト作成 -->
-			<script type="text/javascript">
-				var playlists = JSON.parse(localStorage['playlists']);
-				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
-																				 document.write('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="値1" checked="checked"/>');
-																				 document.write(playlists[list_idx].title + " " + playlists[list_idx].url + "<br/>");
-																				 }
-																				 </script>
+				<input type="radio" name="playgroup" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
+				<!-- チェックリスト作成 -->
+				<script type="text/javascript">
+					var playlists = JSON.parse(localStorage['playlists']);
+					for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+				  document.write('&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="値1" checked="checked"/>');
+				  document.write(playlists[list_idx].title + "&nbsp;" + playlists[list_idx].url + "<br/>");
+				  }
+				</script>
 
-			<!-- ラジオボタン作成 -->
-			<script type="text/javascript">
-				var playgroups = [];
-				try{
-				playgroups = JSON.parse(localStorage['playgroups']);
-				}catch(e){
-				}
+				<!-- ラジオボタン作成 -->
+				<script type="text/javascript">
+					var playgroups = [];
+					try{
+					playgroups = JSON.parse(localStorage['playgroups']);
+					}catch(e){
+					}
 
-				for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
-																				 document.write('<input type="radio" name="playgroup" value="saved"/>');
-																				 document.write(playgroups[list_idx].title + "<br/>");
-																				 }
-																				 </script>
-		</form>
+					for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
+				  document.write('<input type="radio" name="playgroup" value="saved"/>');
+				  document.write(playgroups[list_idx].title + "<br/>");
+				  }
+				</script>
+
+			</form>
+		</div>
 
 		<!-- テスト -->
-		<input type="button" name="test" value="console playgroups" onClick="test()"/>
-
+		<input type="button" name="test" value="console playgroups" onClick="test();"/>
+		<input type="button" name="hoge" value="Update playgroups" onClick="changeRdbutton();"/>
 
 		<!--▼D 動画埋め込み SWFObject-->
 		<script type="text/javascript">
