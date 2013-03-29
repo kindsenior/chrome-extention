@@ -50,32 +50,32 @@
 		<!-- 次の曲 -->
 		<input type="image" alt="" width="24" height="24" src="img/forward.png" onClick="skip()"/>
 
-		<!-- PlayGroup追加ボタン -->
-		<!-- <input type="button" name="add_playgroup" value="Add Playgroup" -->
-		<!-- 			 onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100, top=100 ');"/> -->
-
 		<!-- 設定プルダウン -->
-		<div id="items">
-			<h3>setting</h3>
+		<div id="item">
+			<h3>Setting</h3>
 			<ul id="foo">
-				<li class="bar">about&nbsp;playlist
+				<li class="bar">about&nbsp;playlist<!-- playlist -->
 					<ul>
 						<li class="bar">add&nbsp;playlist
 							<ul>
-								<li>from&nbsp;user</li>
+								<li onClick="console.log('hoge');">from&nbsp;user</li>
 								<li>from&nbsp;playlist&nbsp;ID</li>
 							</ul>
 						</li>
 						<li>remove&nbsp;playlist</li>
 					</ul>
 				</li>
-				<li class="bar">about&nbsp;playgroup
+				<li class="bar">about&nbsp;playgroup<!-- playgroup -->
 					<ul>
-						<li onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100 top=100 ');">
+						<li onClick="window.open('add_playgroup_window.html','input
+												 form','width=400, height=300, left=100, top=100 ');">
 							add&nbsp;playgroup
 						</li>
 						<li>edit&nbsp;playgroup</li>
-						<li>remove&nbsp;playgroup</li>
+						<li onClick="window.open('remove_playgroup_window.html','remove
+						 						 form','width=400, height=300, left=100, top=100');">
+							remove&nbsp;playgroup
+						</li>
 					</ul>
 				</li>
 			</ul>
