@@ -12,7 +12,7 @@
     </script>
 
 		<script type="text/javascript" src="jquery.js"></script>
-		<script type="text/javascript" src="ylistrandom.js"></script>
+		<script type="text/javascript" src="playlist.js"></script>
 		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/A43739755D0CD2E2?max-results=50&alt=json-in-script&callback=getYoutubePlaylist"></script> -->
 		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/playlists/PLRBIThknUR5llT1e6bfmf5trUu9a2Q_4L?alt=json-in-script&callback=getYoutubePlaylist"></script> -->
 		<!-- <script type="text/javascript" src="http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist"></script> -->
@@ -22,7 +22,6 @@
 		<script type="text/javascript">
 			$.ajax({
 			type: "GET",
-			//url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json-in-script&callback=getYoutubePlaylist",
 			url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json",
 			async: false,
 			success: function(data){
@@ -57,13 +56,18 @@
 			<ul id="foo">
 				<li class="bar">about&nbsp;playlist<!-- playlist -->
 					<ul>
-						<li class="bar">add&nbsp;playlist
-							<ul>
-								<li onClick="console.log('hoge');">from&nbsp;user</li>
-								<li>from&nbsp;playlist&nbsp;ID</li>
-							</ul>
+						<!-- <li class="bar">add&nbsp;playlist -->
+						<!-- 	<ul> -->
+						<!-- 		<li>from&nbsp;user</li> -->
+						<!-- 		<li>from&nbsp;playlist&nbsp;ID</li> -->
+						<!-- 	</ul> -->
+						<!-- </li> -->
+						<li onClick="window.open('add_playlist_window.html','input form','width=400, height=300, left=100, top=100 ');">
+							add&nbsp;playlist
 						</li>
-						<li>remove&nbsp;playlist</li>
+						<li onClick="window.open('remove_playlist_window.html','input form','width=400, height=300, left=100, top=100 ');">
+							remove&nbsp;playlist
+						</li>
 					</ul>
 				</li>
 				<li class="bar">about&nbsp;playgroup<!-- playgroup -->
@@ -71,7 +75,7 @@
 						<li onClick="window.open('add_playgroup_window.html','input form','width=400, height=300, left=100, top=100 ');">
 							add&nbsp;playgroup
 						</li>
-						<li onClick="window.open('edit_playgroup_window.html','edit	form', 'width=600, height=300, left=100, top=100')">
+						<li onClick="window.open('edit_playgroup_window.html','edit	form', 'width=600, height=300, left=100, top=100');">
 							edit&nbsp;playgroup
 						</li>
 						<li onClick="window.open('remove_playgroup_window.html','remove form','width=400, height=300, left=100, top=100');">

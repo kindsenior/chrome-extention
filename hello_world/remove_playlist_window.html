@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+	<head>
+		<title>YouTubeリスト マージ再生</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+      google.load("swfobject", "2.1");
+    </script>
+
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="playlist.js"></script>
+		<!-- <script type="text/javascript" src="player.js"></script> -->
+
+	</head>
+
+	<body>
+
+		<!-- タイトル選択 -->
+		<form name="chbox" >
+			Title of Playlist to Remove:<br/>
+			<script type="text/javascript">
+				var playlists = JSON.parse(localStorage['playlists']);
+				if( playlists.length ){
+				for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			  document.write('<input type="checkbox" value=""/>');
+			  document.write(playlists[list_idx].title + "<br/>");
+				<!-- console.log(playgroups[list_idx].title); -->
+				}
+				}else{
+			  document.write('<input type="checkbox" value=""/>');
+			  document.write(playlists.title + "<br/>");
+				}
+        </script>
+		</form>
+
+		<!-- 削除ボタン -->
+		<input type="button" value="Remove" onClick="removePlaylist()"/>
+		
+	</body>
+
+</html>
+	
+

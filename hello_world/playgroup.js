@@ -27,8 +27,8 @@ function addPlaygroup(){
 
 		localStorage['playgroups'] = JSON.stringify(playgroups);
 
+		changeRdbutton();
 		window.close();
-		// changeRdbutton();
 }
 
 // チェックのついているplaygroupを削除
@@ -56,17 +56,17 @@ function removePlaygroup(){
 		// 追加 & 保存
 		localStorage['playgroups'] = JSON.stringify(playgroups);
 
+		changeRdbutton();
 		window.close();
-		// changeRdbutton();
 }
 
-// チェックボックスの表示を変更 (playgroup編集時)
+// playgroupのplaylist表示用チェックボックスを更新 (playgroupの編集時)
 function changeChbox(){
 		console.log("changeChbox");
 
 		var target = document.getElementById("current_contents_of_playgroup");
 
-		var iti = document.selection.playgroup_to_edit.selectedIndex-1;
+		var iti = document.selection.playgroup_to_edit.selectedIndex - 1;// -1
 		console.log(iti);
 
 		var playgroups = JSON.parse(localStorage['playgroups']);
@@ -80,22 +80,49 @@ function changeChbox(){
 
 }
 
-// ラジオボタンの表示を更新 (playgroups編集時)
+// 削除候補プルダウンを更新
+function changeRemovePulldown(){
+		console.log("changeRemovePulldown");
+
+		var target = document.getElementById("remove_pulldown");
+
+		var selected_playgroup_idx = document.selection.playgroup_to_edit.selectedIndex - 1;// -1
+		var playgroups = JSON.parse(localStorage['playgroups']);
+		var playlists = playgroups[selected_playgroup_idx].playlists;
+		var pulldown_html = "";
+		for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+			  pulldown_html += '<option value=""/>' + playlists[list_idx].title;
+		}
+
+		target.innerHTML = '<select name="playlist_to_remove"><option selected value=""\/>Select Playgroup to Remove' + pulldown_html + '<\/select>'
+
+}
+
+// playgroupタイトルボックス更新
+function changeTextinput(){
+		console.log("changeTextinput");
+
+		var playgroups = JSON.parse(localStorage['playgroups']);
+		selected_playgroup_idx =  document.selection.playgroup_to_edit.selectedIndex - 1;// -1
+		document.textinput.title.value = playgroups[selected_playgroup_idx].title;
+}
+
+
+// ラジオボタンの表示を更新 (playgroupのリストの編集時)
 function changeRdbutton(){
 		console.log("changeRdbutton");
 
-		// var parent_win = window.open("","Google Chrome");
-		// var target = parent_win.document.getElementById("current_contents_of_playgroups");// ウィンドウが異なる場合どうする？
-		var target = document.getElementById("current_contents_of_playgroups");// ウィンドウが異なる場合どうする？
+		var target = window.opener.document.getElementById("current_contents_of_playgroups");// 親ウィンドに対して
 
+		// 非保存のplaygroup
 		var rdbutton_html = '<input type="radio" name="playgroup" value="not_saved" checked="checked"\/>Playgroup Not Saved<br\/>'
-
 		var playlists = JSON.parse(localStorage['playlists']);
 		for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
 				rdbutton_html += '&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="" checked="checked"\/>'
 						+ playlists[list_idx].title + "&nbsp;" + playlists[list_idx].url + "<br\/>";
 		}
 
+		// 保存済みのplaygroup
 		var playgroups = JSON.parse(localStorage['playgroups']);
 		for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
 			  rdbutton_html += '<input type="radio" value=""\/>' + playgroups[list_idx].title + "<br\/>";
@@ -105,13 +132,87 @@ function changeRdbutton(){
 
 }
 
-// playgroupのチェックリストを表示
-function writePlaygroupChbox(playgroup_id){
-		console.log("writePlaygroupChbox");
-		var playgroups = JSON.parse(localStorage['playgroups']);
-		var playlists = playgroups[playgroup_id].playlists;
-		for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
-			  document.write('<input type="checkbox" value=""/>');
-			  document.write(playlists[list_idx].title + "<br/>");
-    }
+// playlistをplaygroupに追加
+function addPlaylistToPlaygroup(){
+		var selected_playgroup_idx = document.selection.playgroup_to_edit.selectedIndex - 1;// -1
+		var selected_playlist_idx = document.add.playlist_to_add.selectedIndex - 1;// -1
+
+		var playlists = JSON.parse(localStorage['playlists']);
+		console.log("add Playgroup");
+
+		// 登録済みのplaygroupを取得
+		var playgroups = [];
+		try{
+				playgroups = JSON.parse(localStorage['playgroups']);
+		}catch(e){
+				console.log("playgroups not exists");
+		}
+
+		// 追加 & 保存
+		playgroups[selected_playgroup_idx].playlists.push(playlists[selected_playlist_idx]);
+		localStorage['playgroups'] = JSON.stringify(playgroups);
+
+		changeChbox();
+		changeRemovePulldown();
 }
+
+// playlistをplaygroupから削除
+function removePlaylistFromPlaygroup(){
+		var selected_playgroup_idx = document.selection.playgroup_to_edit.selectedIndex - 1;// -1
+		var selected_playlist_idx = document.remove.playlist_to_remove.selectedIndex - 1;// -1
+
+		var playlists = JSON.parse(localStorage['playlists']);
+		console.log("add Playgroup");
+
+		// 登録済みのplaygroupを取得
+		var playgroups = [];
+		try{
+				playgroups = JSON.parse(localStorage['playgroups']);
+		}catch(e){
+				console.log("playgroups not exists");
+		}
+
+		// 追加 & 保存
+		playgroups[selected_playgroup_idx].playlists.splice(selected_playlist_idx,1);
+		localStorage['playgroups'] = JSON.stringify(playgroups);
+
+		changeChbox();
+		changeRemovePulldown();
+}
+
+// playgroupのTitleを変更
+function renamePlaygroup(){
+		var selected_playgroup_idx = document.selection.playgroup_to_edit.selectedIndex - 1;// -1
+
+		console.log("rename Playgroup");
+
+		// 登録済みのプレイリストセットを取得
+		var playgroups = [];
+		try{
+				playgroups = JSON.parse(localStorage['playgroups']);
+		}catch(e){
+				console.log("playgroups not exists");
+		}
+
+		// 追加 & 保存
+		playgroups[selected_playgroup_idx].title = document.textinput.title.value;
+		localStorage['playgroups'] = JSON.stringify(playgroups);
+
+}
+
+// 編集を終了
+function exitPlaygroupEdit(){
+		changeRdbutton();
+		window.close();
+}
+
+// // playgroupのチェックリストを表示
+// function writePlaygroupChbox(playgroup_id){
+// 		console.log("writePlaygroupChbox");
+// 		var playgroups = JSON.parse(localStorage['playgroups']);
+// 		var playlists = playgroups[playgroup_id].playlists;
+// 		for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+// 			  document.write('<input type="checkbox" value=""/>');
+// 			  document.write(playlists[list_idx].title + "<br/>");
+//     }
+// }

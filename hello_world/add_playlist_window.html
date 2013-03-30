@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+	<head>
+		<title>YouTubeリスト マージ再生</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+    <script src="http://www.google.com/jsapi"></script>
+    <script>
+      google.load("swfobject", "2.1");
+    </script>
+
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="playlist.js"></script>
+
+	</head>
+
+	<body>
+
+		<form method="post" name="selection">
+			Add Youtube Playlist from 
+			<select name="method_to_add_playlist" onchange="">
+				<option value="user"/>Youtube User ID
+				<option value="playlist"/>Youtube Playlist ID
+			</select>
+		</form>
+
+
+		<!-- PlaylistIDによる追加 -->
+		<form name="from_playlist_id">
+			Playlist ID to Add: <input type="text" name="playlist_id" value="Youtube Playlist ID"/>
+			<input type="button" value="Enter" onClick="showPlaylistContents();"/>
+		</form>
+
+		<div id="contents_of_paylist">
+		Tile:<br/>
+		Url:<br/>
+		</div>
+
+		<!-- UserIDによる追加 -->
+		<form name="from_user_id">
+			Youtube User ID: <input type="text" name="user_id" value="Youtube User ID"/>
+			<input type="button" value="Enter" onClick="changePlaylistChboxOfUser();"/>
+		</form>
+		<div id="playlists_of_user">
+		</div>
+
+
+		<!-- 追加ボタン -->
+		<input type="button" value="Add" onClick="addPlaylist()"/>
+		
+	</body>
+
+</html>
+
+
