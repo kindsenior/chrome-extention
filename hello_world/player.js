@@ -40,12 +40,12 @@ function onytplayerStateChange(newState){
 // 次の曲
 function skip(){
 		console.log("next video");
-		var videos = getCheckedPlaygroupVideos();
-		var next_video_idx = Math.floor(Math.random()*videos.length);
-		console.log(videos[next_video_idx].title);
-		console.log(videos[next_video_idx].url);
+
+		play_idx = ( play_idx + 1 ) % videos.length;
+		console.log(videos[play_idx].title);
+		console.log(videos[play_idx].url);
 		//document.getElementById("myytplayer1").loadVideoById(video_urls[Math.floor(Math.random()*video_urls.length)]);
-		document.getElementById("myytplayer1").loadVideoByUrl(videos[next_video_idx].url); 
+		document.getElementById("myytplayer1").loadVideoByUrl(videos[play_idx].url); 
 
 }
 

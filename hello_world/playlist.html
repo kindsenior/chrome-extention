@@ -20,18 +20,27 @@
 		<script type="text/javascript" src="playgroup.js"></script>
 
 		<script type="text/javascript">
-			$.ajax({
-			type: "GET",
-			url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json",
-			async: false,
-			success: function(data){
-			getYoutubePlaylist(data);
-			},
-			error: function(XMLHttpRequest,textStatus,errorThrown){
-			console.log("GET error"); 
-			console.log(textStatus);
+			console.log("init");
+			var playlists;
+			try{
+			playlists = JSON.parse(localStorage['playlists']);
+			}catch(e){
+			console.log("playlists not saved");
+			console.log("open add playlist window");
+			window.open('add_playlist_window.html','input form','width=600, height=300, left=100, top=100 ');
 			}
-			});
+			//$.ajax({
+			//type: "GET",
+			//url: "http://gdata.youtube.com/feeds/api/users/HpkUDLO9rFToIO0jM1lYtA/playlists?v=2&alt=json",
+			//async: false,
+			//success: function(data){
+			//getYoutubePlaylist(data);
+			//},
+			//error: function(XMLHttpRequest,textStatus,errorThrown){
+			//console.log("GET error");
+			//console.log(textStatus);
+			//}
+			//});
 		</script>
 
 		<link rel="stylesheet" type="text/css" href="pulldown.css">
@@ -56,13 +65,7 @@
 			<ul id="foo">
 				<li class="bar">about&nbsp;playlist<!-- playlist -->
 					<ul>
-						<!-- <li class="bar">add&nbsp;playlist -->
-						<!-- 	<ul> -->
-						<!-- 		<li>from&nbsp;user</li> -->
-						<!-- 		<li>from&nbsp;playlist&nbsp;ID</li> -->
-						<!-- 	</ul> -->
-						<!-- </li> -->
-						<li onClick="window.open('add_playlist_window.html','input form','width=400, height=300, left=100, top=100 ');">
+						<li onClick="window.open('add_playlist_window.html','input form','width=700, height=300, left=100, top=100 ');">
 							add&nbsp;playlist
 						</li>
 						<li onClick="window.open('remove_playlist_window.html','input form','width=400, height=300, left=100, top=100 ');">
@@ -89,7 +92,7 @@
 		<div id="current_contents_of_playgroups">
 			<form name="playgroup_selection">
 
-				<input type="radio" name="playgroup" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
+				<input type="radio" name="playgroup" onClick="updateVideosOfSelectedPlaygroup();" value="not_saved" checked="checked"/>Playgroup Not Saved<br/>
 				<!-- チェックリスト作成 -->
 				<script type="text/javascript">
 					var playlists = JSON.parse(localStorage['playlists']);
@@ -108,7 +111,7 @@
 					}
 
 					for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
-				  document.write('<input type="radio" name="playgroup" value="saved"/>');
+				  document.write('<input type="radio" name="playgroup" onClick="updateVideosOfSelectedPlaygroup();" value="saved"/>');
 				  document.write(playgroups[list_idx].title + "<br/>");
 				  }
 				</script>
@@ -117,17 +120,18 @@
 		</div>
 
 		<!-- テスト -->
-		<input type="button" name="test" value="console playgroups" onClick="test();"/>
-		<input type="button" name="hoge" value="Update playgroups" onClick="changeRdbutton();"/>
+		<input type="button" name="test" value="Update Video List of Selected Playgroup" onClick="updateVideosOfSelectedPlaygroup();"/>
 
 		<!--▼D 動画埋め込み SWFObject-->
 		<script type="text/javascript">
 			var params = { allowScriptAccess: "always" };
 			var atts = { id: "myytplayer1" };
 
-			var videos = getCheckedPlaygroupVideos();
-			video_url = videos[Math.floor(Math.random()*videos.length)].url;
-			video_title = videos[Math.floor(Math.random()*videos.length)].title;
+			<!-- play_idx = 0; -->
+			updateVideosOfSelectedPlaygroup();
+			<!-- videos = getCheckedPlaygroupVideos(); -->
+			video_url = videos[play_idx].url;
+			video_title = videos[play_idx].title;
 			<!-- swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "480", "295", "8", null, null, params, atts); -->
 			swfobject.embedSWF(video_url+"&enablejsapi=1&autoplay=1&playerapiid=ytplayer1","ytapiplayer1", "600", "400", "8", null, null, params, atts);
 

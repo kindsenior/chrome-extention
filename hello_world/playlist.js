@@ -12,26 +12,71 @@ function makeUrlFromUserID(user_id){
 
 // ラジオボタンの表示を更新 (playlistのリストの編集時)
 function changeRdbuttonOfNotSavedPlaygroup(){
-		console.log("changeRdbutton");
+		console.log("changeRdbuttonOfNotSavedPlaygroup");
 
 		var target = window.opener.document.getElementById("current_contents_of_playgroups");// 親ウィンドに対して
+		var selected_playgroup_idx = window.opener.document.playgroup_selection.playgroup.selectedIndex;
 
 		// 非保存のplaygroup
-		var rdbutton_html = '<input type="radio" name="playgroup" value="not_saved" checked="checked"\/>Playgroup Not Saved<br\/>'
+		console.log("current contents of not saved playgroup");
+		var rdbutton_html = (selected_playgroup_idx == 0) ?
+				'<input type="radio" name="playgroup" value="not_saved" onClick="updateVideosOfSelectedPlaygroup()" checked="checked"\/>Playgroup Not Saved<br\/>'
+				: '<input type="radio" name="playgroup" onClick="updateVideosOfSelectedPlaygroup()" value="not_saved"\/>Playgroup Not Saved<br\/>';
 		var playlists = JSON.parse(localStorage['playlists']);
 		for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
+				console.log(playlists[list_idx].title);
 				rdbutton_html += '&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="" checked="checked"\/>'
 						+ playlists[list_idx].title + "&nbsp;" + playlists[list_idx].url + "<br\/>";
 		}
 
 		// 保存済みのplaygroup
+		console.log("current saved playgroups");
 		var playgroups = JSON.parse(localStorage['playgroups']);
 		for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
-			  rdbutton_html += '<input type="radio" value=""\/>' + playgroups[list_idx].title + "<br\/>";
+				console.log(playgroups[list_idx].title);
+				if( selected_playgroup_idx == list_idx + 1 ){// +1
+						rdbutton_html += '<input type="radio" value="" onClick="updateVideosOfSelectedPlaygroup()" checked="checked"\/>'
+								+ playgroups[list_idx].title + "<br\/>";
+				}else{
+						rdbutton_html += '<input type="radio" onClick="updateVideosOfSelectedPlaygroup()" value=""\/>'
+								+ playgroups[list_idx].title + "<br\/>";
+				}
     }
 
 		target.innerHTML = '<form name="playgroup_selection">' + rdbutton_html + '<\/form>';
 
+}
+
+// playlistの追加方法の更新
+function changePlaylistAddMethod(){
+		console.log("changePlaylistAddMethod");
+		var selected_method_idx = document.selection.method_to_add_playlist.selectedIndex;
+		var selected_method_value = document.selection.method_to_add_playlist.options[selected_method_idx].value;
+		if ( selected_method_value == "playlist" ){
+				document.getElementById("from_playlist_id").style.backgroundColor = "white";
+				document.getElementById("from_playlist_id").style.color = "black";
+				document.getElementById("from_user_id").style.backgroundColor = "lightgray";
+				document.getElementById("from_user_id").style.color = "gray";
+				document.from_playlist_id.playlist_id.disabled = null;
+				document.from_playlist_id.enter.disabled = null;
+				document.from_user_id.user_id.disabled = "disabled";
+				document.from_user_id.enter.disabled = "disabled";
+				for( var i = 0; i < document.chbox.elements.length; ++i){
+						document.chbox.elements[i].disabled = "disabled";
+				}
+		}else if( selected_method_value == "user" ){
+				document.getElementById("from_playlist_id").style.backgroundColor="lightgray";
+				document.getElementById("from_playlist_id").style.color="gray";
+				document.getElementById("from_user_id").style.backgroundColor="white";
+				document.getElementById("from_user_id").style.color="black";
+				document.from_playlist_id.playlist_id.disabled = "disabled";
+				document.from_playlist_id.enter.disabled = "disabled";
+				document.from_user_id.user_id.disabled = null;
+				document.from_user_id.enter.disabled = null;
+				for( var i = 0; i < document.chbox.elements.length; ++i){
+						document.chbox.elements[i].disabled = null;
+				}
+		}
 }
 
 // UserIDによる追加とPlaylistIDによる追加を判断
@@ -49,7 +94,7 @@ function addPlaylist(){
 
 // Playlistを1個LocalStorageに追加
 function addPlaylistToLocalStorage(playlist_id){
-		console.log(addPlaylistToLocalStorage);
+		console.log("addPlaylistToLocalStorage");
 
 		var videos = [];
 		var max_results = 50;
@@ -141,10 +186,10 @@ function addPlaylistFromUserID(){
 				success: function(data){
 						console.log(url);
 						var entries = data.feed.entry;
+						console.log("add playlist below");
 						for(var i = 0; i < entries.length; ++i){
-								console.log("add playlist below");
 								if( document.chbox.elements[i].checked ){
-										// console.log(entries[i].title.&t);
+										console.log(entries[i].title.$t);
 										addPlaylistToLocalStorage(entries[i].yt$playlistId.$t);
 								}
 						}
@@ -234,6 +279,26 @@ function changePlaylistChboxOfUser(){
 		});
 
 		target.innerHTML = '<form name="chbox">' + chbox_html + '<\/form>';
+}
+
+// シャッフル実装
+Array.prototype.shuffle = function() {
+    var i = this.length;
+    while(i){
+        var j = Math.floor(Math.random()*i);
+        var t = this[--i];
+        this[i] = this[j];
+        this[j] = t;
+    }
+    return this;
+}
+
+// 再生用のvideoリストを更新 インデクスの初期化
+function updateVideosOfSelectedPlaygroup(){
+		console.log("updateVideosOfSelectedPlaygroup");
+		play_idx = 0;
+		videos = getCheckedPlaygroupVideos();
+		videos.shuffle();
 }
 
 // チェックが入っているリスト内のビデオを抽出(再生時に使用)

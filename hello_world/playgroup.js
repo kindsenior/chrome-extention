@@ -53,7 +53,7 @@ function removePlaygroup(){
 				}
 		}
 
-		// 追加 & 保存
+		// 保存
 		localStorage['playgroups'] = JSON.stringify(playgroups);
 
 		changeRdbutton();
@@ -113,9 +113,15 @@ function changeRdbutton(){
 		console.log("changeRdbutton");
 
 		var target = window.opener.document.getElementById("current_contents_of_playgroups");// 親ウィンドに対して
+		var selected_playgroup_idx = window.opener.document.playgroup_selection.playgroup.selectedIndex;
+
+		// 更新するたびにNotSavedPlaygroupが前チェック状態に戻る
 
 		// 非保存のplaygroup
-		var rdbutton_html = '<input type="radio" name="playgroup" value="not_saved" checked="checked"\/>Playgroup Not Saved<br\/>'
+		// var rdbutton_html = '<input type="radio" name="playgroup" value="not_saved" checked="checked"\/>Playgroup Not Saved<br\/>'
+		var rdbutton_html = (selected_playgroup_idx == 0) ?
+				'<input type="radio" name="playgroup" onClick="updateVideosOfSelectedPlaygroup()" value="not_saved" checked="checked"\/>Playgroup Not Saved<br\/>'
+				: '<input type="radio" name="playgroup" onClick="updateVideosOfSelectedPlaygroup()" value="not_saved"\/>Playgroup Not Saved<br\/>';
 		var playlists = JSON.parse(localStorage['playlists']);
 		for(var list_idx = 0; list_idx < playlists.length; ++list_idx){
 				rdbutton_html += '&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="" checked="checked"\/>'
@@ -125,7 +131,13 @@ function changeRdbutton(){
 		// 保存済みのplaygroup
 		var playgroups = JSON.parse(localStorage['playgroups']);
 		for(var list_idx = 0; list_idx < playgroups.length; ++list_idx){
-			  rdbutton_html += '<input type="radio" value=""\/>' + playgroups[list_idx].title + "<br\/>";
+			  // rdbutton_html += '<input type="radio" value=""\/>' + playgroups[list_idx].title + "<br\/>";
+				if( selected_playgroup_idx == list_idx + 1 ){// +1
+						rdbutton_html += '<input type="radio" onClick="updateVideosOfSelectedPlaygroup()" value="" checked="checked"\/>' + playgroups[list_idx].title + "<br\/>";
+				}else{
+						rdbutton_html += '<input type="radio" onClick="updateVideosOfSelectedPlaygroup()" value=""\/>' + playgroups[list_idx].title + "<br\/>";
+				}
+
     }
 
 		target.innerHTML = '<form name="playgroup_selection">' + rdbutton_html + '<\/form>';

@@ -18,36 +18,45 @@
 
 		<form method="post" name="selection">
 			Add Youtube Playlist from 
-			<select name="method_to_add_playlist" onchange="">
+			<select name="method_to_add_playlist" onchange="changePlaylistAddMethod();">
 				<option value="user"/>Youtube User ID
 				<option value="playlist"/>Youtube Playlist ID
 			</select>
 		</form>
 
-
-		<!-- PlaylistIDによる追加 -->
-		<form name="from_playlist_id">
-			Playlist ID to Add: <input type="text" name="playlist_id" value="Youtube Playlist ID"/>
-			<input type="button" value="Enter" onClick="showPlaylistContents();"/>
-		</form>
-
-		<div id="contents_of_paylist">
-		Tile:<br/>
-		Url:<br/>
-		</div>
-
 		<!-- UserIDによる追加 -->
-		<form name="from_user_id">
-			Youtube User ID: <input type="text" name="user_id" value="Youtube User ID"/>
-			<input type="button" value="Enter" onClick="changePlaylistChboxOfUser();"/>
-		</form>
-		<div id="playlists_of_user">
+		<div id="from_user_id" style="float:left; color:black; background-color:white;">
+			<form name="from_user_id">
+				Youtube User ID: 
+				<input type="text" name="user_id" value="Youtube User ID"/>
+				<input type="button" name="enter" value="Enter" onClick="changePlaylistChboxOfUser();"/>
+			</form>
+
+			<div id="playlists_of_user">
+			</div>
 		</div>
 
+		<div id="from_playlist_id" style="float:left; margine-left:10px; color:gray; background-color:lightgray;">
+			<!-- PlaylistIDによる追加 -->
+			<form name="from_playlist_id">
+				Playlist ID: 
+				<input type="text" name="playlist_id" disabled="disabled" value="Youtube Playlist ID"/>
+				<input type="button" name="enter" disabled="disabled" value="Enter" onClick="showPlaylistContents();"/>
+			</form>
 
-		<!-- 追加ボタン -->
-		<input type="button" value="Add" onClick="addPlaylist()"/>
-		
+			<div id="contents_of_paylist">
+				Tile:<br/>
+				Url:<br/>
+			</div>
+		</div>
+
+		<div style="clear:both;">
+			<center>
+				<!-- 追加ボタン -->
+				<input type="button" value="Add" onClick="addPlaylist()"/>
+			</center>
+		</div>		
+
 	</body>
 
 </html>
