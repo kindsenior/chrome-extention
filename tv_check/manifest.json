@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "TV table check",
+  "description": "This extension search keywords on a TV table",
+  "version": "1.0",
+	"background": {
+	"scripts": ["background.js"]
+	},
+
+  "permissions": [
+    "https://secure.flickr.com/","tabs","https://*/*","http://*/*"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+		"default_title": "hello world"
+  }
+}

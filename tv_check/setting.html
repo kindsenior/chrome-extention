@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+	<head>
+		<title>TV table checker</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+		<script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+
+	</head>
+
+	<body>
+
+
+		<form method="post" name="setting">
+
+			check TV table of
+			<select name="stationAreaId" id="duration_selector">
+				<option value="1" >1</option>
+				<option value="2" >2</option>
+				<option value="3" >3</option>
+				<option value="4" >4</option>
+				<option value="5" >5</option>
+				<option value="6" >6</option>
+				<option value="7" selected="selected">7</option>
+			</select>
+			Days&nbsp;&nbsp;on
+			<label><input type="checkbox" name="day_selector" value="0"/>Sun</label>
+			<label><input type="checkbox" name="day_selector" value="1"/>Mon</label>
+			<label><input type="checkbox" name="day_selector" value="2"/>Tue</label>
+			<label><input type="checkbox" name="day_selector" value="3"/>Wed</label>
+			<label><input type="checkbox" name="day_selector" value="4"/>Thu</label>
+			<label><input type="checkbox" name="day_selector" value="5"/>Fri</label>
+			<label><input type="checkbox" name="day_selector" value="6"/>Sat</label>
+			.
+
+		</br>
+		location:
+			<select name="stationAreaId" id="area_selector">
+				<option value="10" >北海道（札幌）</option>
+				<option value="11" >北海道（函館）</option>
+				<option value="12" >北海道（旭川）</option>
+				<option value="13" >北海道（帯広）</option>
+				<option value="14" >北海道（釧路）</option>
+				<option value="15" >北海道（北見）</option>
+				<option value="16" >北海道（室蘭）</option>
+				<option value="22" >青森</option>
+				<option value="20" >岩手</option>
+				<option value="17" >宮城</option>
+				<option value="18" >秋田</option>
+				<option value="19" >山形</option>
+				<option value="21" >福島</option>
+				<option value="26" >茨城</option>
+				<option value="28" >栃木</option>
+				<option value="25" >群馬</option>
+				<option value="29" >埼玉</option>
+				<option value="27" >千葉</option>
+				<option value="23" >東京</option>
+				<option value="24" >神奈川</option>
+				<option value="31" >新潟</option>
+				<option value="32" >山梨</option>
+				<option value="30" >長野</option>
+				<option value="37" >富山</option>
+				<option value="34" >石川</option>
+				<option value="36" >福井</option>
+				<option value="39" >岐阜</option>
+				<option value="35" >静岡</option>
+				<option value="33" >愛知</option>
+				<option value="38" >三重</option>
+				<option value="45" >滋賀</option>
+				<option value="41" >京都</option>
+				<option value="40" >大阪</option>
+				<option value="42" >兵庫</option>
+				<option value="44" >奈良</option>
+				<option value="43" >和歌山</option>
+				<option value="49" >鳥取</option>
+				<option value="48" >島根</option>
+				<option value="47" >岡山</option>
+				<option value="46" >広島</option>
+				<option value="50" >山口</option>
+				<option value="53" >徳島</option>
+				<option value="52" >香川</option>
+				<option value="51" >愛媛</option>
+				<option value="54" >高知</option>
+				<option value="55" >福岡</option>
+				<option value="61" >佐賀</option>
+				<option value="57" >長崎</option>
+				<option value="56" >熊本</option>
+				<option value="60" >大分</option>
+				<option value="59" >宮崎</option>
+				<option value="58" >鹿児島</option>
+				<option value="62" selected="selected">沖縄</option>
+			</select>
+
+
+		</form></br>
+
+		<!-- 保存ボタン -->
+		<form>
+			<input type="button" name="cancel_button" value="Cancel" />
+			<input type="button" name="exit_button" value="Save and Exit Setting" />
+		</form>
+
+		<form method="post" name="conditionSets" id="condition_sets_area">
+			<!-- 検索条件 -->
+		</form>
+
+		<!-- 保存ボタン -->
+		<form>
+			<input type="button" name="cancel_button" value="Cancel" />
+			<input type="button" name="exit_button" value="Save and Exit Setting" />
+		</form>
+
+		<script type="text/javascript" src="setting.js"></script>
+
+
+	</body>
+
+</html>
+	
+
+
