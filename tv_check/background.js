@@ -23,6 +23,6 @@ function periodicCheck(){
 				}
 		}
 
-		setTimeout( function(){periodicCheck();},30*1000 );// 30秒ごと
-		// setTimeout( function(){periodicCheck();},30*60*1000 );// 30分ごと
+		// setTimeout( function(){periodicCheck();},30*1000 );// 30秒ごと
+		setTimeout( function(){periodicCheck();},30*60*1000 );// 30分ごと
 }

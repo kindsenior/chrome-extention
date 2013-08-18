@@ -4,8 +4,11 @@
 targets = [ {"sitename":"BS","areaId":"bs1","encode":'UTF-8'},
 						{"sitename":"地上デジタル","areaId":"","encode":'UTF-8'} ];
 
+programDaySets = [];
+
 /* 検索条件 */
 // falseに""を入れない
+checkedConditionSets = [];
 conditionSets = [ { "title":"日本人",
 										"conditions":[
 												{ "true":["松田聖子"],"false":[] },
@@ -116,17 +119,8 @@ conditionSets = [ { "title":"日本人",
 								];
 
 console.log("init");
-// try{
-// 		conditionSets = JSON.parse(localStorage['conditionSets']);
-// 		areaId = localStorage['areaId'];
-// }catch(e){
-// 		console.log("setting is not saved");
-// 		console.log("open edit conditionSets window");
-// 		openSettingWindow();
-// }
-
+// 初期設定
 if( !localStorage['conditionSets'] || !localStorage['areaId'] ){
-		// 初期設定
 		console.log("setting is not saved");
 		console.log("open edit conditionSets window");
 		openSettingWindow();
@@ -135,12 +129,30 @@ if( !localStorage['conditionSets'] || !localStorage['areaId'] ){
 conditionSets = JSON.parse(localStorage['conditionSets']);
 areaId = localStorage['areaId']; targets[1].areaId = areaId;
 
+// コールバック関数設定
 // 設定ボタン
-var settingOpenButton = document.createElement('input');
-settingOpenButton.type = "button";
-settingOpenButton.value = "Setting";
+var settingOpenButton = document.getElementById("setting_button");
 settingOpenButton.addEventListener("click", function(){openSettingWindow();});
-document.body.appendChild( settingOpenButton );
+// 検索ボタン
+var executeCheckButton = document.getElementById("execute_check_button");
+executeCheckButton.addEventListener("click", function(){check();});
+
+// condition set selector
+var conditionSetSelector = document.getElementById("condition_set_selector");
+for( var i in conditionSets ){
+		var conditionSetLabel = document.createElement("label");
+
+		var conditionSetChbox = document.createElement("input");
+		conditionSetChbox.type = "checkbox"; conditionSetChbox.value = i; conditionSetChbox.setAttribute("checked","");
+		conditionSetChbox.name = "condition_set_chbox";
+		// conditionSetChbox.addEventListener("change", function(){check();});なぜか効かない
+		conditionSetLabel.appendChild( conditionSetChbox );
+
+		conditionSetLabel.innerHTML += conditionSets[i].title;
+		conditionSetLabel.appendChild( document.createElement("br") );
+
+		conditionSetSelector.appendChild( conditionSetLabel );
+}
 
 // 検索実行 & 結果表示
 check();
@@ -151,15 +163,22 @@ function openSettingWindow(){
 }
 
 //パターン検索
-function searchPattern(condition,sentence){
+function searchPattern(condition,program,replaceFlg){
+		console.log("searchPattern");
+		var sentence = program.title+program.summary;
 
     /* condtionのtrueまたはfalseで１つでも条件を満たさなければ、条件を満たさないとする */
-		for(var i in condition["true"]){
-        if(sentence.indexOf(condition["true"][i]) == -1)return false;
-    }
 		for(var i in condition["false"]){
         if(sentence.indexOf(condition["false"][i]) != -1)return false;
-    };
+    }
+		for(var i in condition["true"]){
+        if(sentence.indexOf(condition["true"][i]) == -1)return false;
+				if(replaceFlg){
+						program.title = String(program.title).replace(condition["true"][i],'<b>'+condition["true"][i]+'</b>');
+						program.summary = String(program.summary).replace(condition["true"][i],'<b>'+condition["true"][i]+'</b>');
+				}
+    }
+
     return true;
 
 }
@@ -178,26 +197,95 @@ function computeDate(year, month, day, addDays){
 
 //更新されているかどうかチェック
 function check(){
+		console.log("check");
+		// チェックされているcondition groupを取得
+		checkedConditionSets = [];
+		var conditionSetSelector = document.getElementById("condition_set_selector");
+		var conditionSetChboxes = conditionSetSelector.condition_set_chbox;
+		for( i in conditionSetChboxes ){
+				if(conditionSetChboxes[i].checked) checkedConditionSets.push(conditionSets[i]);
+		}
+		
+		// 表示部初期化
+		var searchResultArea = document.getElementById("search_result_area");
+		search_result_area.innerHTML = "";
+
 		var date = new Date();
 
-    for(var i=0;i<7;i++){/* １週間分検索 */
-				checkOneDay(date);
-				
-				date = computeDate(date.getFullYear(), date.getMonth()+1, date.getDate(), 1);// 日付をすすめる
-    }
-		
+		if(programDaySets.length==0){
+				for(var i=0;i<7;i++){/* １週間分検索 */
+						checkOneDay(date);
+						date = computeDate(date.getFullYear(), date.getMonth()+1, date.getDate(), 1);// 日付をすすめる
+				}
+		}
+
+		// 各日の検索結果表示
+		for( i in programDaySets ){// 日付ループ
+				var dayTitle = document.createElement("h3");
+				dayTitle.setAttribute("style", "position: relative; left:10px");
+				dayTitle.innerHTML = programDaySets[i].date;
+				searchResultArea.appendChild( dayTitle );
+
+				for( j in programDaySets[i].programSets ){// テレビ局ループ
+						for( k in programDaySets[i].programSets[j].programs ){// 番組ループ
+								var hitPrograms = [];
+								var program = programDaySets[i].programSets[j].programs[k];
+								var sentence = program.title+program.summary;
+								// console.log(sentence);
+
+								for(var x in checkedConditionSets){
+										for(var y in checkedConditionSets[x].conditions){
+												if( searchPattern(checkedConditionSets[x].conditions[y],program,false) ){
+														hitPrograms.push(program);
+												}
+										}
+								}
+
+								// console.log(programSets[i].station + " " + hitProgramSets[i].hitPrograms.length + " hits");
+
+								if( hitPrograms.length != 0 ){
+										// テレビ局タイトル
+										var tvStationTitle = document.createElement("h4");
+										// hで改行しないときはdisplay:inline
+										tvStationTitle.setAttribute("style", "display:inline; position: relative; left: 20px");
+										tvStationTitle.innerHTML = programDaySets[i].programSets[j].station + " " + hitPrograms.length + " hits";
+										searchResultArea.appendChild( tvStationTitle );
+
+										for( n in hitPrograms ){
+												// console.log("  " + hitProgramSets[i].hitPrograms[j].time + " 「" + hitProgramSets[i].hitPrograms[j].title + "」");
+												// console.log("           " + hitProgramSets[i].hitPrograms[j].summary);
+						
+												var hitProgramTitleSpan = document.createElement("span");
+												hitProgramTitleSpan.innerHTML 
+														= hitPrograms[n].time + " 「" + hitPrograms[n].title + "」"
+												// spanを縦に並べるときはdisplay: block
+												hitProgramTitleSpan.setAttribute("style", "display: block; position: relative; left: 40px");
+												searchResultArea.appendChild( hitProgramTitleSpan );
+
+												var hitProgramSummarySpan = document.createElement("span");
+												hitProgramSummarySpan.innerHTML = hitPrograms[n].summary;
+												hitProgramSummarySpan.setAttribute("style", "display: block; position: relative; left: 60px");
+												searchResultArea.appendChild( hitProgramSummarySpan );
+						
+										}searchResultArea.appendChild( document.createElement('br') );
+								}
+						}
+				}
+		}
+
 }
 
 // 1日分の検索
 function checkOneDay(date){
-		document.write( "<h3>" + (date.getMonth()+1) + "/" + date.getDate() + "</h3>" );
+		console.log("checkOneDay");
+		var searchResultArea = document.getElementById("search_result_area");
 
+		var programSets = [];
 		for( i in targets){// 地上デジタルとBS
 
 				var url="http://tv.so-net.ne.jp/chart/"+targets[i].areaId+".action?head="+date.getFullYear()+("00"+(date.getMonth()+1)).slice(-2)+("00"+date.getDate()).slice(-2)+"0000"+"&span=24&chartWidth=2000&cellHeight=5";
 
-				var hitProgramSets = [];
-				var hitPrograms = [];
+				var programs = [];
 				console.log(url);
 
 				$.ajax({
@@ -240,10 +328,11 @@ function checkOneDay(date){
 										if(tvShowFlg){
 												var sentence = tvShowProg.title+tvShowProg.summary;
 												// console.log(sentence);
-												for(var i in conditionSets){
-														for(var j in conditionSets[i].conditions){
-																if( searchPattern(conditionSets[i].conditions[j],sentence) ){
-																		hitPrograms.push(tvShowProg);
+												for(var i in checkedConditionSets){
+														for(var j in checkedConditionSets[i].conditions){
+																if( searchPattern(checkedConditionSets[i].conditions[j], tvShowProg, true) ){
+																		programs.push(tvShowProg);
+																		console.log(tvShowProg.title+tvShowProg.summary);
 																}
 														}
 												}
@@ -251,13 +340,11 @@ function checkOneDay(date){
 
 										// テレビ局										
 										if( String($(this).attr("id")).indexOf("cell-station-bottom-") != -1 ){
-												if( hitPrograms.length != 0 ){
+												if( programs.length != 0 ){
 														var station = String($(this).attr("title"));
 														// console.log(station + " " + hitPrograms.length + " hits");
-														// for(var i in hitPrograms)
-														// 		console.log("  " + hitPrograms[i].time + " " + hitPrograms[i].title);
-														hitProgramSets.push( {"station":station, "hitPrograms": hitPrograms} );
-														hitPrograms = [];
+														programSets.push( {"station":station, "programs":programs} );
+														programs = [];
 												}
 										}
 
@@ -269,20 +356,11 @@ function checkOneDay(date){
 								console.log("GET error");
 								console.log(textStatus);
 						}
-				});
+				}); // end ajax
 
 
-				// 各日の検索結果表示
-				for( i in hitProgramSets ){
-						console.log(hitProgramSets[i].station + " " + hitProgramSets[i].hitPrograms.length + " hits");
-						document.write("<h4>" + hitProgramSets[i].station + " " + hitProgramSets[i].hitPrograms.length + " hits</h4>");
-						for( j in hitProgramSets[i].hitPrograms ){
-								console.log("  " + hitProgramSets[i].hitPrograms[j].time + " 「" + hitProgramSets[i].hitPrograms[j].title + "」");
-								console.log("           " + hitProgramSets[i].hitPrograms[j].summary);
-								document.write("&nbsp;" + hitProgramSets[i].hitPrograms[j].time + " 「" + hitProgramSets[i].hitPrograms[j].title + "」</br>");
-								document.write("&nbsp;&nbsp;&nbsp;&nbsp;" + hitProgramSets[i].hitPrograms[j].summary + "</br>");
-						}document.write("</br>");
-				}
-				
 		}
+		var dayTitle = (date.getMonth()+1) + "/" + date.getDate();
+		programDaySets.push({"date":dayTitle, "programSets":programSets});
+
 }

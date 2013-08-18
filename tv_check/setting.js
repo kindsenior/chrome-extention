@@ -8,10 +8,101 @@ conditionSets = [ { "title":"日本人",
 										] },
 									{ "title":"韓国人",
 										"conditions":[
-												{ "true":["キョン・ミリ","ヤン・ミギョン","イ・ヨンエ"],"false":["イ・イプセ","パク・ウネ"] },
+												{ "true":["キョン・ミリ"],"false":[] },
 												{ "true":["ハン・ジミン"],"false":[] },
-												{ "true":["ハン・ヒョジュ"],"false":["パク・ハソン"] }
-										] }
+												{ "true":["ハン・ヒョジュ"],"false":[] },
+												{ "true":["チョン・イル"],"false":[] }
+										] },
+									{ "title":"欧米人",
+										"conditions":[
+												{ "true":["マイケル・ジャクソン"],"false":[] }
+										] },
+
+									{"title":"アニメ",
+									 "conditions":[
+											 { "true":["ドラゴンボール"], "false":["ドラゴンボールZ","ドラゴンボールGT"] },
+											 { "true":["スラムダンク"],"false":[] },
+											 { "true":["SLAM","DUNK"],"false":[] },
+											 { "true":["NARUTO"],"false":[] },
+
+											 { "true":["タッチ"],"false":[] },
+
+											 { "true":["傷物語"],"false":[] },
+											 { "true":["化物語"],"false":[] },
+											 { "true":["偽物語"],"false":[] },
+
+											 { "true":["攻殻機動隊"],"false":[] },
+											 { "true":["十二国記"],"false":[] },
+											 { "true":["エヴァンゲリオン"],"false":[] },
+											 { "true":["ヱヴァンゲリオン"],"false":[] },
+											 { "true":["ソードアート・オンライン"],"false":[] },
+											 /* { "true":["リトルバスターズ"],"false":[] ], */
+											 { "true":["とらドラ"],"false":[] },
+											 { "true":["ハチミツとクローバー"],"false":[] },
+											 { "true":["瀬戸の花嫁"],"false":[] },
+											 { "true":["君に届け"],"false":[] },
+											 { "true":["ヒカルの碁"],"false":[] },
+											 { "true":["いちご100%"],"false":[] },
+											 { "true":["みなみけ"],"false":[] },
+											 { "true":["中二病でも恋がしたい"],"false":[] },
+											 { "true":["ジョジョの奇妙な冒険"],"false":[] },
+											 { "true":["琴浦さん"],"false":[] },
+											 { "true":["D.C."],"false":[] },
+											 { "true":["涼宮ハルヒ"],"false":[] },
+											 { "true":["未来少年コナン"],"false":[] }
+									 ] },
+
+									{"title":"世界名作劇場",
+									 "conditions":[
+											 { "true":["ナンとジョー先生"],"false":[] },
+											 { "true":["ピーターパン"],"false":[] },
+											 { "true":["若草物語"],"false":[] },
+											 { "true":["フランダースの犬"],"false":[] },
+											 { "true":["あらいぐまラスカル"],"false":[] },
+											 { "true":["母をたずねて三千里"],"false":[] },
+											 { "true":["ふしぎな島のフローネ"],"false":[] },
+											 { "true":["ポリアンナ物語"],"false":[] },
+											 { "true":["ペリーヌ物語"],"false":[] },
+											 { "true":["小公女セーラ"],"false":[] },
+											 { "true":["赤毛のアン"],"false":[] },
+											 { "true":["あしながおじさん"],"false":[] },
+											 { "true":["トム・ソーヤの冒険"],"false":[] },
+											 { "true":["トラップ一家物語"],"false":[] },
+											 { "true":["南の虹のルーシー"],"false":[] },
+											 { "true":["大草原","ブッシュベイビー"],"false":[] },
+											 { "true":["わたしのアンネット"],"false":[] },
+											 { "true":["七つの海のティコ"],"false":[] },
+											 { "true":["小公子セディ"],"false":[] },
+											 { "true":["牧場の少女カトリ"],"false":[] },
+											 { "true":["ロミオの青い空"],"false":[] },
+											 { "true":["名犬ラッシー"],"false":[] },
+											 { "true":["家なき子レミ"],"false":[] },
+											 { "true":["ふたりのロッテ"],"false":[] }
+									 ] },
+
+									{"title":"ドラマ",
+									 "conditions":[
+											 { "true":["ヤマトナデシコ"],"false":[] },
+											 { "true":["ママはアイドル"],"false":[] },
+											 { "true":["Love Story","中山美穂"],"false":[] },
+											 { "true":["花ざかりの君たちへ"],"false":[] },
+											 { "true":["理想の結婚","竹野内"],"false":[] },
+											 { "true":["HERO"],"false":[] },
+											 { "true":["流星の絆"],"false":[] },
+											 { "true":["ウルトラマン"] , "false":["ウルトラマン列伝","デジタルリマスター"] },
+											 { "true":["シャーロック"],"false":[] }
+									 ]},
+
+									{"title":"海外ドラマ",
+									 "conditions":[
+											 { "true":["glee"],"false":[] },
+											 { "true":["アグリー・ベティ"],"false":[] },
+											 { "true":["ER","緊急救命室"],"false":[] },
+
+											 { "true":["チャングムの誓い"],"false":[] },
+											 { "true":["イ・サン"],"false":["イ・サンヨプ","ペク・ドンス"] },
+											 { "true":["トンイ"],"false":[] }
+									 ] }
 								];
 
 // 記録値 読み込み
@@ -117,18 +208,16 @@ function createCondition( conditions, conditionIdx, condition ){
 		// condition number
 		var conditionSpan = document.createElement('span');
 		conditionSpan.setAttribute("style","clear:both");
-		conditionSpan.innerHTML = "&nbsp;&nbsp;Condition&nbsp;" + (parseInt(conditionIdx)+1);
+		conditionSpan.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;Condition&nbsp;" + (parseInt(conditionIdx)+1);
 		conditionSpan.appendChild( createConditionDeleteButton(conditions, conditionIdx) );
 		element.appendChild(conditionSpan);
 
 		// trueKeywordFormSets
 		var trueKeywordFormSets = document.createElement('div');
 		trueKeywordFormSets.setAttribute("style","clear:both");
-		// trueKeywordFormSets.style = "clear:both";
 		var trueSpan =  document.createElement('span');
-		trueSpan.setAttribute("style","float:left");
-		// trueSpan.style = "float:left";
-		trueSpan.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;Contain";
+		trueSpan.setAttribute("style","float:left; position: relative; top: 5px;");
+		trueSpan.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain";
 		trueKeywordFormSets.appendChild( trueSpan );
 		for ( i in condition["true"] ){
 				trueKeywordFormSets.appendChild( createKeywordFormSet(conditions[conditionIdx]["true"], i, condition["true"][i]) );
@@ -139,12 +228,9 @@ function createCondition( conditions, conditionIdx, condition ){
 
 		// falseKeywordFormSets
 		var falseKeywordFormSets = document.createElement('div');
-		falseKeywordFormSets.setAttribute("style","clear:both");
-		// falseKeywordFormSets.style = "clear:both";
+		falseKeywordFormSets.setAttribute("style","float:left");
 		var falseSpan =  document.createElement('span');
-		// var falseSpan =  document.createElement('div');
-		falseSpan.setAttribute("style","float:left");
-		// falseSpan.style = "float:left";
+		falseSpan.setAttribute("style","float:left; position: relative; top: 5px;");
 		falseSpan.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;Not Contain";
 		falseKeywordFormSets.appendChild( falseSpan );
 		for( i in condition["false"] ){
@@ -165,6 +251,7 @@ function createKeywordFormSet( keywords, keywordIdx, keyword ){
 		element.setAttribute("style","float:left");
 		// element.style = "float:left";
 
+		element.innerHTML = "&nbsp;&nbsp;";
 		// キーワードフォーム
 		var keywordForm = document.createElement('input');
 		keywordForm.type = "text"; keywordForm.size = "20"; keywordForm.value = keyword;
@@ -210,8 +297,8 @@ function createConditionSetDeleteButton( conditionSetIdx ){
 // キーワードフォーム追加ボタン
 function createKeywordFormAddButton(keywords){
 		var element = document.createElement('input');
-		element.setAttribute("style", "float:left");
-		element.type = "image"; element.alt=""; element.width="12"; element.src="img/plus.png";
+		element.setAttribute("style", "float:left; position: relative; top: 5px;");
+		element.type = "image"; element.alt=""; element.width="15"; element.src="img/plus.png";
 		element.addEventListener("click", function(){ addKeyword(keywords); });
 		
 		return element;
