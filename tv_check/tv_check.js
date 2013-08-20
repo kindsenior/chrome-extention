@@ -9,114 +9,7 @@ programDaySets = [];
 /* 検索条件 */
 // falseに""を入れない
 checkedConditionSets = [];
-conditionSets = [ { "title":"日本人",
-										"conditions":[
-												{ "true":["松田聖子"],"false":[] },
-												{ "true":["山口百恵"],"false":[] },
-												{ "true":["新垣結衣"],"false":[] },
-												{ "true":["堺雅人"],"false":[] },
-												{ "true":["イチロー"],"false":[] }
-										] },
-									{ "title":"韓国人",
-										"conditions":[
-												{ "true":["キョン・ミリ"],"false":[] },
-												{ "true":["ハン・ジミン"],"false":[] },
-												{ "true":["ハン・ヒョジュ"],"false":[] },
-												{ "true":["チョン・イル"],"false":[] }
-										] },
-									{ "title":"欧米人",
-										"conditions":[
-												{ "true":["マイケル・ジャクソン"],"false":[] }
-										] },
-
-									{"title":"アニメ",
-									 "conditions":[
-											 { "true":["ドラゴンボール"], "false":["ドラゴンボールZ","ドラゴンボールGT"] },
-											 { "true":["スラムダンク"],"false":[] },
-											 { "true":["SLAM","DUNK"],"false":[] },
-											 { "true":["NARUTO"],"false":[] },
-
-											 { "true":["タッチ"],"false":[] },
-
-											 { "true":["傷物語"],"false":[] },
-											 { "true":["化物語"],"false":[] },
-											 { "true":["偽物語"],"false":[] },
-
-											 { "true":["攻殻機動隊"],"false":[] },
-											 { "true":["十二国記"],"false":[] },
-											 { "true":["エヴァンゲリオン"],"false":[] },
-											 { "true":["ヱヴァンゲリオン"],"false":[] },
-											 { "true":["ソードアート・オンライン"],"false":[] },
-											 /* { "true":["リトルバスターズ"],"false":[] ], */
-											 { "true":["とらドラ"],"false":[] },
-											 { "true":["ハチミツとクローバー"],"false":[] },
-											 { "true":["瀬戸の花嫁"],"false":[] },
-											 { "true":["君に届け"],"false":[] },
-											 { "true":["ヒカルの碁"],"false":[] },
-											 { "true":["いちご100%"],"false":[] },
-											 { "true":["みなみけ"],"false":[] },
-											 { "true":["中二病でも恋がしたい"],"false":[] },
-											 { "true":["ジョジョの奇妙な冒険"],"false":[] },
-											 { "true":["琴浦さん"],"false":[] },
-											 { "true":["D.C."],"false":[] },
-											 { "true":["涼宮ハルヒ"],"false":[] },
-											 { "true":["未来少年コナン"],"false":[] }
-									 ] },
-
-									{"title":"世界名作劇場",
-									 "conditions":[
-											 { "true":["ナンとジョー先生"],"false":[] },
-											 { "true":["ピーターパン"],"false":[] },
-											 { "true":["若草物語"],"false":[] },
-											 { "true":["フランダースの犬"],"false":[] },
-											 { "true":["あらいぐまラスカル"],"false":[] },
-											 { "true":["母をたずねて三千里"],"false":[] },
-											 { "true":["ふしぎな島のフローネ"],"false":[] },
-											 { "true":["ポリアンナ物語"],"false":[] },
-											 { "true":["ペリーヌ物語"],"false":[] },
-											 { "true":["小公女セーラ"],"false":[] },
-											 { "true":["赤毛のアン"],"false":[] },
-											 { "true":["あしながおじさん"],"false":[] },
-											 { "true":["トム・ソーヤの冒険"],"false":[] },
-											 { "true":["トラップ一家物語"],"false":[] },
-											 { "true":["南の虹のルーシー"],"false":[] },
-											 { "true":["大草原","ブッシュベイビー"],"false":[] },
-											 { "true":["わたしのアンネット"],"false":[] },
-											 { "true":["七つの海のティコ"],"false":[] },
-											 { "true":["小公子セディ"],"false":[] },
-											 { "true":["牧場の少女カトリ"],"false":[] },
-											 { "true":["ロミオの青い空"],"false":[] },
-											 { "true":["名犬ラッシー"],"false":[] },
-											 { "true":["家なき子レミ"],"false":[] },
-											 { "true":["ふたりのロッテ"],"false":[] }
-									 ] },
-
-									{"title":"ドラマ",
-									 "conditions":[
-											 { "true":["ヤマトナデシコ"],"false":[] },
-											 { "true":["ママはアイドル"],"false":[] },
-											 { "true":["Love Story","中山美穂"],"false":[] },
-											 { "true":["花ざかりの君たちへ"],"false":[] },
-											 { "true":["理想の結婚","竹野内"],"false":[] },
-											 { "true":["HERO"],"false":[] },
-											 { "true":["流星の絆"],"false":[] },
-											 { "true":["ウルトラマン"] , "false":["ウルトラマン列伝","デジタルリマスター"] },
-											 { "true":["シャーロック"],"false":[] }
-									 ]},
-
-									{"title":"海外ドラマ",
-									 "conditions":[
-											 { "true":["glee"],"false":[] },
-											 { "true":["アグリー・ベティ"],"false":[] },
-											 { "true":["ER","緊急救命室"],"false":[] },
-
-											 { "true":["チャングムの誓い"],"false":[] },
-											 { "true":["イ・サン"],"false":["イ・サンヨプ","ペク・ドンス"] },
-											 { "true":["トンイ"],"false":[] },
-
-											 { "true":["高校野球"],"false":[] }
-									 ] }
-								];
+conditionSets = [];
 
 console.log("init");
 // 初期設定
@@ -137,28 +30,41 @@ settingOpenButton.addEventListener("click", function(){openSettingWindow();});
 var executeCheckButton = document.getElementById("execute_check_button");
 executeCheckButton.addEventListener("click", function(){check();});
 
-// condition set selector
-var conditionSetSelector = document.getElementById("condition_set_selector");
-for( var i in conditionSets ){
-		var conditionSetLabel = document.createElement("label");
-
-		var conditionSetChbox = document.createElement("input");
-		conditionSetChbox.type = "checkbox"; conditionSetChbox.value = i; conditionSetChbox.setAttribute("checked","");
-		conditionSetChbox.name = "condition_set_chbox";
-		// conditionSetChbox.addEventListener("change", function(){check();});なぜか効かない
-		conditionSetLabel.appendChild( conditionSetChbox );
-
-		conditionSetLabel.innerHTML += conditionSets[i].title;
-		conditionSetLabel.appendChild( document.createElement("br") );
-
-		conditionSetSelector.appendChild( conditionSetLabel );
-}
+// condition set selector 描画
+drawConditionSetSelector();
 
 // 検索実行 & 結果表示
 check();
 
+// condition set selector 描画
+function drawConditionSetSelector(documentObj){
+		console.log("drawConditionSetSelector");
+		
+		// デフォルト引数
+		if( documentObj === undefined ){	documentObj =  document; console.log("undefined"); }
+		// 子windowから親windowの一部を再描画できない
+
+		var conditionSetSelector = documentObj.getElementById("condition_set_selector");
+		conditionSetSelector.innerHTML = "";
+		for( var i in conditionSets ){
+				var conditionSetLabel = documentObj.createElement("label");
+
+				var conditionSetChbox = documentObj.createElement("input");
+				conditionSetChbox.type = "checkbox"; conditionSetChbox.value = i; conditionSetChbox.setAttribute("checked","");
+				conditionSetChbox.name = "condition_set_chbox";
+				// conditionSetChbox.addEventListener("change", function(){check();});なぜか効かない
+				conditionSetLabel.appendChild( conditionSetChbox );
+
+				conditionSetLabel.innerHTML += conditionSets[i].title;
+				conditionSetLabel.appendChild( documentObj.createElement("br") );
+
+				conditionSetSelector.appendChild( conditionSetLabel );
+		}
+}
+
 // 設定ウィンドウを開く
 function openSettingWindow(){
+		console.log("openSettingWindow");
 		window.open('setting.html','Edit Condition Sets Window','width=800, height=600, left=100, top=100 ');
 }
 

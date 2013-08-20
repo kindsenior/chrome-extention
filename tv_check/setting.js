@@ -1,111 +1,114 @@
-conditionSets = [ { "title":"日本人",
-										"conditions":[
-												{ "true":["松田聖子"],"false":[] },
-												{ "true":["山口百恵"],"false":[] },
-												{ "true":["新垣結衣"],"false":[] },
-												{ "true":["堺雅人"],"false":[] },
-												{ "true":["イチロー"],"false":[] }
-										] },
-									{ "title":"韓国人",
-										"conditions":[
-												{ "true":["キョン・ミリ"],"false":[] },
-												{ "true":["ハン・ジミン"],"false":[] },
-												{ "true":["ハン・ヒョジュ"],"false":[] },
-												{ "true":["チョン・イル"],"false":[] }
-										] },
-									{ "title":"欧米人",
-										"conditions":[
-												{ "true":["マイケル・ジャクソン"],"false":[] }
-										] },
+/* 検索条件 */
+// falseに""を入れない
+// conditionSets = [ { "title":"日本人",
+// 										"conditions":[
+// 												{ "true":["松田聖子"],"false":[] },
+// 												{ "true":["山口百恵"],"false":[] },
+// 												{ "true":["新垣結衣"],"false":[] },
+// 												{ "true":["堺雅人"],"false":[] },
+// 												{ "true":["イチロー"],"false":[] }
+// 										] },
+// 									{ "title":"韓国人",
+// 										"conditions":[
+// 												{ "true":["キョン・ミリ"],"false":[] },
+// 												{ "true":["ハン・ジミン"],"false":[] },
+// 												{ "true":["ハン・ヒョジュ"],"false":[] },
+// 												{ "true":["チョン・イル"],"false":[] }
+// 										] },
+// 									{ "title":"欧米人",
+// 										"conditions":[
+// 												{ "true":["マイケル・ジャクソン"],"false":[] }
+// 										] },
 
-									{"title":"アニメ",
-									 "conditions":[
-											 { "true":["ドラゴンボール"], "false":["ドラゴンボールZ","ドラゴンボールGT"] },
-											 { "true":["スラムダンク"],"false":[] },
-											 { "true":["SLAM","DUNK"],"false":[] },
-											 { "true":["NARUTO"],"false":[] },
+// 									{"title":"アニメ",
+// 									 "conditions":[
+// 											 { "true":["ドラゴンボール"], "false":["ドラゴンボールZ","ドラゴンボールGT"] },
+// 											 { "true":["スラムダンク"],"false":[] },
+// 											 { "true":["SLAM","DUNK"],"false":[] },
+// 											 { "true":["NARUTO"],"false":[] },
 
-											 { "true":["タッチ"],"false":[] },
+// 											 { "true":["タッチ"],"false":[] },
 
-											 { "true":["傷物語"],"false":[] },
-											 { "true":["化物語"],"false":[] },
-											 { "true":["偽物語"],"false":[] },
+// 											 { "true":["傷物語"],"false":[] },
+// 											 { "true":["化物語"],"false":[] },
+// 											 { "true":["偽物語"],"false":[] },
 
-											 { "true":["攻殻機動隊"],"false":[] },
-											 { "true":["十二国記"],"false":[] },
-											 { "true":["エヴァンゲリオン"],"false":[] },
-											 { "true":["ヱヴァンゲリオン"],"false":[] },
-											 { "true":["ソードアート・オンライン"],"false":[] },
-											 /* { "true":["リトルバスターズ"],"false":[] ], */
-											 { "true":["とらドラ"],"false":[] },
-											 { "true":["ハチミツとクローバー"],"false":[] },
-											 { "true":["瀬戸の花嫁"],"false":[] },
-											 { "true":["君に届け"],"false":[] },
-											 { "true":["ヒカルの碁"],"false":[] },
-											 { "true":["いちご100%"],"false":[] },
-											 { "true":["みなみけ"],"false":[] },
-											 { "true":["中二病でも恋がしたい"],"false":[] },
-											 { "true":["ジョジョの奇妙な冒険"],"false":[] },
-											 { "true":["琴浦さん"],"false":[] },
-											 { "true":["D.C."],"false":[] },
-											 { "true":["涼宮ハルヒ"],"false":[] },
-											 { "true":["未来少年コナン"],"false":[] }
-									 ] },
+// 											 { "true":["攻殻機動隊"],"false":[] },
+// 											 { "true":["十二国記"],"false":[] },
+// 											 { "true":["エヴァンゲリオン"],"false":[] },
+// 											 { "true":["ヱヴァンゲリオン"],"false":[] },
+// 											 { "true":["ソードアート・オンライン"],"false":[] },
+// 											 /* { "true":["リトルバスターズ"],"false":[] ], */
+// 											 { "true":["とらドラ"],"false":[] },
+// 											 { "true":["ハチミツとクローバー"],"false":[] },
+// 											 { "true":["瀬戸の花嫁"],"false":[] },
+// 											 { "true":["君に届け"],"false":[] },
+// 											 { "true":["ヒカルの碁"],"false":[] },
+// 											 { "true":["いちご100%"],"false":[] },
+// 											 { "true":["みなみけ"],"false":[] },
+// 											 { "true":["中二病でも恋がしたい"],"false":[] },
+// 											 { "true":["ジョジョの奇妙な冒険"],"false":[] },
+// 											 { "true":["琴浦さん"],"false":[] },
+// 											 { "true":["D.C."],"false":[] },
+// 											 { "true":["涼宮ハルヒ"],"false":[] },
+// 											 { "true":["未来少年コナン"],"false":[] }
+// 									 ] },
 
-									{"title":"世界名作劇場",
-									 "conditions":[
-											 { "true":["ナンとジョー先生"],"false":[] },
-											 { "true":["ピーターパン"],"false":[] },
-											 { "true":["若草物語"],"false":[] },
-											 { "true":["フランダースの犬"],"false":[] },
-											 { "true":["あらいぐまラスカル"],"false":[] },
-											 { "true":["母をたずねて三千里"],"false":[] },
-											 { "true":["ふしぎな島のフローネ"],"false":[] },
-											 { "true":["ポリアンナ物語"],"false":[] },
-											 { "true":["ペリーヌ物語"],"false":[] },
-											 { "true":["小公女セーラ"],"false":[] },
-											 { "true":["赤毛のアン"],"false":[] },
-											 { "true":["あしながおじさん"],"false":[] },
-											 { "true":["トム・ソーヤの冒険"],"false":[] },
-											 { "true":["トラップ一家物語"],"false":[] },
-											 { "true":["南の虹のルーシー"],"false":[] },
-											 { "true":["大草原","ブッシュベイビー"],"false":[] },
-											 { "true":["わたしのアンネット"],"false":[] },
-											 { "true":["七つの海のティコ"],"false":[] },
-											 { "true":["小公子セディ"],"false":[] },
-											 { "true":["牧場の少女カトリ"],"false":[] },
-											 { "true":["ロミオの青い空"],"false":[] },
-											 { "true":["名犬ラッシー"],"false":[] },
-											 { "true":["家なき子レミ"],"false":[] },
-											 { "true":["ふたりのロッテ"],"false":[] }
-									 ] },
+// 									{"title":"世界名作劇場",
+// 									 "conditions":[
+// 											 { "true":["ナンとジョー先生"],"false":[] },
+// 											 { "true":["ピーターパン"],"false":[] },
+// 											 { "true":["若草物語"],"false":[] },
+// 											 { "true":["フランダースの犬"],"false":[] },
+// 											 { "true":["あらいぐまラスカル"],"false":[] },
+// 											 { "true":["母をたずねて三千里"],"false":[] },
+// 											 { "true":["ふしぎな島のフローネ"],"false":[] },
+// 											 { "true":["ポリアンナ物語"],"false":[] },
+// 											 { "true":["ペリーヌ物語"],"false":[] },
+// 											 { "true":["小公女セーラ"],"false":[] },
+// 											 { "true":["赤毛のアン"],"false":[] },
+// 											 { "true":["あしながおじさん"],"false":[] },
+// 											 { "true":["トム・ソーヤの冒険"],"false":[] },
+// 											 { "true":["トラップ一家物語"],"false":[] },
+// 											 { "true":["南の虹のルーシー"],"false":[] },
+// 											 { "true":["大草原","ブッシュベイビー"],"false":[] },
+// 											 { "true":["わたしのアンネット"],"false":[] },
+// 											 { "true":["七つの海のティコ"],"false":[] },
+// 											 { "true":["小公子セディ"],"false":[] },
+// 											 { "true":["牧場の少女カトリ"],"false":[] },
+// 											 { "true":["ロミオの青い空"],"false":[] },
+// 											 { "true":["名犬ラッシー"],"false":[] },
+// 											 { "true":["家なき子レミ"],"false":[] },
+// 											 { "true":["ふたりのロッテ"],"false":[] }
+// 									 ] },
 
-									{"title":"ドラマ",
-									 "conditions":[
-											 { "true":["ヤマトナデシコ"],"false":[] },
-											 { "true":["ママはアイドル"],"false":[] },
-											 { "true":["Love Story","中山美穂"],"false":[] },
-											 { "true":["花ざかりの君たちへ"],"false":[] },
-											 { "true":["理想の結婚","竹野内"],"false":[] },
-											 { "true":["HERO"],"false":[] },
-											 { "true":["流星の絆"],"false":[] },
-											 { "true":["ウルトラマン"] , "false":["ウルトラマン列伝","デジタルリマスター"] },
-											 { "true":["シャーロック"],"false":[] }
-									 ]},
+// 									{"title":"ドラマ",
+// 									 "conditions":[
+// 											 { "true":["ヤマトナデシコ"],"false":[] },
+// 											 { "true":["ママはアイドル"],"false":[] },
+// 											 { "true":["Love Story","中山美穂"],"false":[] },
+// 											 { "true":["花ざかりの君たちへ"],"false":[] },
+// 											 { "true":["理想の結婚","竹野内"],"false":[] },
+// 											 { "true":["HERO"],"false":[] },
+// 											 { "true":["流星の絆"],"false":[] },
+// 											 { "true":["ウルトラマン"] , "false":["ウルトラマン列伝","デジタルリマスター"] },
+// 											 { "true":["シャーロック"],"false":[] }
+// 									 ]},
 
-									{"title":"海外ドラマ",
-									 "conditions":[
-											 { "true":["glee"],"false":[] },
-											 { "true":["アグリー・ベティ"],"false":[] },
-											 { "true":["ER","緊急救命室"],"false":[] },
+// 									{"title":"海外ドラマ",
+// 									 "conditions":[
+// 											 { "true":["glee"],"false":[] },
+// 											 { "true":["アグリー・ベティ"],"false":[] },
+// 											 { "true":["ER","緊急救命室"],"false":[] },
 
-											 { "true":["チャングムの誓い"],"false":[] },
-											 { "true":["イ・サン"],"false":["イ・サンヨプ","ペク・ドンス"] },
-											 { "true":["トンイ"],"false":[] }
-									 ] }
-								];
+// 											 { "true":["チャングムの誓い"],"false":[] },
+// 											 { "true":["イ・サン"],"false":["イ・サンヨプ","ペク・ドンス"] },
+// 											 { "true":["トンイ"],"false":[] }
+// 									 ] }
+// 								];
 
 // 記録値 読み込み
+console.log("load local storage");
 try{
 		conditionSets = JSON.parse(localStorage['conditionSets']);
 }catch(e){
@@ -120,14 +123,13 @@ try{
 		checkDays = [];
 }
 
-// condition sites 描画
-drawConditionSets();
 
 // デフォルト値設定
+console.log("set default value");
 durationSlector = document.getElementById("duration_selector");// durationSlector
 for( var i in durationSlector.options ){
 		var option = durationSlector.options[i];
-		if( option.value==duration )option.setAttribute("selected","selected");
+		if( option.value==duration )option.setAttribute("selected","");
 }
 dayChboxes = document.getElementsByName("day_selector");// daySlector
 for( var i in dayChboxes ){
@@ -139,11 +141,12 @@ for( var i in dayChboxes ){
 areaSelector = document.getElementById("area_selector");// areaSelector
 for(var i in areaSelector.options){
 		var option = areaSelector.options[i];
-		if( option.value==areaId )option.setAttribute("selected","selected");
+		if( option.value==areaId )option.setAttribute("selected","");
 }
 
 
 // コールバック関数設定
+console.log("set callback function");
 // キャンセルボタン
 cancelButtons = document.getElementsByName("cancel_button");
 for( var i in cancelButtons )
@@ -154,6 +157,8 @@ exitButtons = document.getElementsByName("exit_button");
 for( var i in exitButtons )
 		exitButtons.item(i).addEventListener("click",function(){endSetting();});
 
+// condition sites 描画
+drawConditionSets();
 
 // 条件セット
 function createConditionSet( conditionSetIdx, conditionSet ){
@@ -458,7 +463,11 @@ function endSetting(){
 		localStorage['checkDays'] = JSON.stringify(checkDays);
 
 
-		// drawConditionSets();
+		// window.opener.location.reload();
+		// 親ウィンドウの関数呼び出し
+		window.opener.drawConditionSetSelector(window.opener.document);
+		window.opener.check();
+
 		window.close();
 }
 

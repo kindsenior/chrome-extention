@@ -23,12 +23,14 @@
 		<!-- <td> -->
 		<div id="side_bar" style="float:left">
 			<form>
-				<input type="image" id="setting_button" src="img/setting.png" width="20"/>
+				<!-- なぜか画像ボタンだと押した時にページが更新される -->
+				<!-- <input type="image" id="setting_button" src="img/setting.png" width="20"/> -->
+				<input type="button" id="setting_button" value="Setting"/>
 			</form>
 			<hr/>
 
+			Condition Group<br/>
 			<form id="condition_set_selector">
-				Condition Group<br/>
 				<!-- <label><input type="checkbox">日本人</label></br> -->
 				<!-- <label><input type="checkbox">韓国人</label></br> -->
 			</form>
