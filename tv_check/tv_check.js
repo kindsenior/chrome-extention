@@ -12,23 +12,27 @@ checkedConditionSets = [];
 conditionSets = [];
 
 console.log("init");
-// 初期設定
-if( !localStorage['conditionSets'] || !localStorage['areaId'] ){
-		console.log("setting is not saved");
-		console.log("open edit conditionSets window");
-		openSettingWindow();
+loadLocalStorage();
+function loadLocalStorage(){
+		console.log("loadLocalStorage");
+		// 初期設定
+		if( !localStorage['conditionSets'] || !localStorage['areaId'] ){
+				console.log("setting is not saved");
+				console.log("open edit conditionSets window");
+				openSettingWindow();
+		}
+		// 設定読み込み
+		conditionSets = JSON.parse(localStorage['conditionSets']);
+		areaId = localStorage['areaId']; targets[1].areaId = areaId;
 }
-// 設定読み込み
-conditionSets = JSON.parse(localStorage['conditionSets']);
-areaId = localStorage['areaId']; targets[1].areaId = areaId;
 
 // コールバック関数設定
 // 設定ボタン
 var settingOpenButton = document.getElementById("setting_button");
 settingOpenButton.addEventListener("click", function(){openSettingWindow();});
-// 検索ボタン
-var executeCheckButton = document.getElementById("execute_check_button");
-executeCheckButton.addEventListener("click", function(){check();});
+// // 検索ボタン
+// var executeCheckButton = document.getElementById("execute_check_button");
+// executeCheckButton.addEventListener("click", function(){check();});
 
 // condition set selector 描画
 drawConditionSetSelector();
@@ -37,26 +41,24 @@ drawConditionSetSelector();
 check();
 
 // condition set selector 描画
-function drawConditionSetSelector(documentObj){
+function drawConditionSetSelector(){
 		console.log("drawConditionSetSelector");
 		
-		// デフォルト引数
-		if( documentObj === undefined ){	documentObj =  document; console.log("undefined"); }
-		// 子windowから親windowの一部を再描画できない
-
-		var conditionSetSelector = documentObj.getElementById("condition_set_selector");
+		// 設定から復帰した時、検索条件のチェックがリセットされてしまう
+		var conditionSetSelector = document.getElementById("condition_set_selector");
 		conditionSetSelector.innerHTML = "";
 		for( var i in conditionSets ){
-				var conditionSetLabel = documentObj.createElement("label");
+				var conditionSetLabel = document.createElement("label");
 
-				var conditionSetChbox = documentObj.createElement("input");
+				var conditionSetChbox = document.createElement("input");
 				conditionSetChbox.type = "checkbox"; conditionSetChbox.value = i; conditionSetChbox.setAttribute("checked","");
 				conditionSetChbox.name = "condition_set_chbox";
-				// conditionSetChbox.addEventListener("change", function(){check();});なぜか効かない
+				// conditionSetChbox.addEventListener("change", function(){check();});// なぜか効かない
+				conditionSetLabel.addEventListener("click", function(){check();});
 				conditionSetLabel.appendChild( conditionSetChbox );
 
 				conditionSetLabel.innerHTML += conditionSets[i].title;
-				conditionSetLabel.appendChild( documentObj.createElement("br") );
+				conditionSetLabel.appendChild( document.createElement("br") );
 
 				conditionSetSelector.appendChild( conditionSetLabel );
 		}
@@ -70,16 +72,16 @@ function openSettingWindow(){
 
 //パターン検索
 function searchPattern(condition,program,replaceFlg){
-		console.log("searchPattern");
+		// console.log("searchPattern");
 		var sentence = program.title+program.summary;
 
     /* condtionのtrueまたはfalseで１つでも条件を満たさなければ、条件を満たさないとする */
 		for(var i in condition["false"]){
-        if(sentence.indexOf(condition["false"][i]) != -1)return false;
+        if( sentence.indexOf(condition["false"][i]) != -1 )return false;
     }
 		for(var i in condition["true"]){
-        if(sentence.indexOf(condition["true"][i]) == -1)return false;
-				if(replaceFlg){
+        if( sentence.indexOf(condition["true"][i]) == -1 )return false;
+				if( sentence.indexOf("<b>")==-1 ){
 						program.title = String(program.title).replace(condition["true"][i],'<b>'+condition["true"][i]+'</b>');
 						program.summary = String(program.summary).replace(condition["true"][i],'<b>'+condition["true"][i]+'</b>');
 				}
@@ -136,12 +138,12 @@ function check(){
 						for( k in programDaySets[i].programSets[j].programs ){// 番組ループ
 								var hitPrograms = [];
 								var program = programDaySets[i].programSets[j].programs[k];
-								var sentence = program.title+program.summary;
+								// var sentence = program.title+program.summary;
 								// console.log(sentence);
 
 								for(var x in checkedConditionSets){
 										for(var y in checkedConditionSets[x].conditions){
-												if( searchPattern(checkedConditionSets[x].conditions[y],program,false) ){
+												if( searchPattern(checkedConditionSets[x].conditions[y],program,true) ){
 														hitPrograms.push(program);
 												}
 										}
@@ -232,16 +234,17 @@ function checkOneDay(date){
 
 										// キーワード検索,リストへ追加
 										if(tvShowFlg){
-												var sentence = tvShowProg.title+tvShowProg.summary;
+												// var sentence = tvShowProg.title+tvShowProg.summary;
 												// console.log(sentence);
-												for(var i in checkedConditionSets){
-														for(var j in checkedConditionSets[i].conditions){
-																if( searchPattern(checkedConditionSets[i].conditions[j], tvShowProg, true) ){
-																		programs.push(tvShowProg);
-																		console.log(tvShowProg.title+tvShowProg.summary);
-																}
-														}
-												}
+												// for(var i in checkedConditionSets){
+												// 		for(var j in checkedConditionSets[i].conditions){
+												// 				if( searchPattern(checkedConditionSets[i].conditions[j], tvShowProg, true) ){
+												// 						programs.push(tvShowProg);
+												// 						console.log(tvShowProg.title+tvShowProg.summary);
+												// 				}
+												// 		}
+												// }
+												programs.push(tvShowProg);
 										}
 
 										// テレビ局										

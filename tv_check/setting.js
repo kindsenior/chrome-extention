@@ -141,8 +141,9 @@ for( var i in dayChboxes ){
 areaSelector = document.getElementById("area_selector");// areaSelector
 for(var i in areaSelector.options){
 		var option = areaSelector.options[i];
-		if( option.value==areaId )option.setAttribute("selected","");
+		if( option.value==areaId ){option.setAttribute("selected","");}
 }
+// console.log(areaSelector.innerHTML);
 
 
 // コールバック関数設定
@@ -454,7 +455,7 @@ function endSetting(){
 		var areaSelector = document.getElementById('area_selector');
 		localStorage['areaId'] = areaSelector.options[areaSelector.selectedIndex].value;
 
-		// 検索時刻保存
+		// 定期検索時刻保存
 		var durationSlector = document.getElementById('duration_selector');
 		localStorage['duration'] = durationSlector.options[durationSlector.selectedIndex].value;
 		var dayChboxes = document.getElementsByName('day_selector');
@@ -462,10 +463,10 @@ function endSetting(){
 		for( var i in dayChboxes )if( dayChboxes.item(i).checked )checkDays.push(dayChboxes.item(i).value);
 		localStorage['checkDays'] = JSON.stringify(checkDays);
 
-
 		// window.opener.location.reload();
 		// 親ウィンドウの関数呼び出し
-		window.opener.drawConditionSetSelector(window.opener.document);
+		window.opener.loadLocalStorage();
+		window.opener.drawConditionSetSelector();
 		window.opener.check();
 
 		window.close();
